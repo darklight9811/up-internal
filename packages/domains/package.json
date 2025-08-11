@@ -34,6 +34,7 @@
 		"drizzle-cuid2": "1.0.5",
 		"drizzle-orm": "^0.44.4",
 		"lucide-react": "catalog:",
+		"postgres": "^3.4.7",
 		"react": "catalog:",
 		"superjson": "^2.2.2",
 		"uploadthing": "^7.7.3",

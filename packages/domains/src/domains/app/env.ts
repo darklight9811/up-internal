@@ -1,4 +1,4 @@
-import v from "@repo/ds/v";
+import v from "zod/v4";
 
 const schema = v.object({
 	name: v.string(),
@@ -25,9 +25,7 @@ export const env = schema.parse({
 			: import.meta.env.VITE_APP_URL,
 
 	secret:
-		typeof process !== "undefined" && process.env.KEY_SECRET
-			? process.env.KEY_SECRET
-			: import.meta.env.KEY_SECRET,
+		typeof process !== "undefined" && process.env.KEY_SECRET ? process.env.KEY_SECRET : import.meta.env.KEY_SECRET,
 
 	resend:
 		typeof process !== "undefined" && process.env.RESEND_API_KEY

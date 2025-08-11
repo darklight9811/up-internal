@@ -2,11 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { redirect, useNavigate } from "react-router";
 import { serverLoader } from "src/utils/server-loader";
+import { z } from "zod/v4";
 
 import { Submit } from "@repo/ds/hooks/use-form";
 import { useSearch } from "@repo/ds/hooks/use-search";
 import { useTranslation } from "@repo/ds/lib/localization";
-import v from "@repo/ds/lib/v/index";
 import { toast } from "@repo/ds/ui/sonner";
 
 import { metadata } from "@repo/domains/app";
@@ -16,10 +16,7 @@ import { authService } from "@repo/domains/auth/server";
 import { trpc } from "@repo/domains";
 
 export const loader = serverLoader(async ({ getTranslations, cookies }) => {
-	const [t, session] = await Promise.all([
-		getTranslations("auth"),
-		authService.session(cookies.get("token")),
-	]);
+	const [t, session] = await Promise.all([getTranslations("auth"), authService.session(cookies.get("token"))]);
 
 	if (!session || session.emailVerified) return redirect("/");
 
@@ -36,7 +33,7 @@ export const meta = metadata<typeof loader>(({ data }) => ({
 
 export default function VerifyPage() {
 	const navigate = useNavigate();
-	const [{ token }] = useSearch(v.object({ token: v.string().optional() }));
+	const [{ token }] = useSearch(z.object({ token: z.string().optional() }));
 	const { t } = useTranslation("auth");
 
 	const {
@@ -52,14 +49,13 @@ export default function VerifyPage() {
 		}),
 	);
 
-	const { mutateAsync: resendVerification, isPending: isResending } =
-		useMutation(
-			trpc.auth.sendVerificationEmail.mutationOptions({
-				onSuccess() {
-					toast.success(t("verify.resent"));
-				},
-			}),
-		);
+	const { mutateAsync: resendVerification, isPending: isResending } = useMutation(
+		trpc.auth.sendVerificationEmail.mutationOptions({
+			onSuccess() {
+				toast.success(t("verify.resent"));
+			},
+		}),
+	);
 
 	useEffect(() => {
 		if (token) verifyEmail({ token });
@@ -68,9 +64,7 @@ export default function VerifyPage() {
 	return (
 		<main className="flex flex-col items-center gap-4 text-center">
 			<h2 className="text-xl font-semibold">{t("verify.title")}</h2>
-			<p className="text-sm text-muted-foreground mb-4">
-				{t("verify.description")}
-			</p>
+			<p className="text-sm text-muted-foreground mb-4">{t("verify.description")}</p>
 
 			<AuthVerify
 				token={token}

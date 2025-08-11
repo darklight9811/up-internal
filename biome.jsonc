@@ -28,16 +28,18 @@
 							":BUN:",
 							":NODE:",
 							":BLANK_LINE:",
-							[":PACKAGE:", "!@repo/**"],
-							[":PACKAGE_WITH_PROTOCOL:", "!@repo/**"],
+							[":PACKAGE:", "!@repo/**", "!src/**"],
+							[":PACKAGE_WITH_PROTOCOL:", "!@repo/**", "!src/**"],
 							":URL:",
 							":BLANK_LINE:",
 							"@repo/ds/**",
 							":BLANK_LINE:",
+							"@repo/domains",
 							"@repo/domains/**",
 							":BLANK_LINE:",
 							"modules/**/*",
 							":ALIAS:",
+							"src/**",
 							":PATH:"
 						]
 					}
@@ -56,12 +58,6 @@
 		"globals": ["React", "JSX"]
 	},
 	"files": {
-		"includes": [
-			"!node_modules/**/*",
-			"packages/*/**",
-			"apps/*/**",
-			"package.json",
-			"tsconfig.json"
-		]
+		"includes": ["!node_modules/**/*", "packages/*/**", "apps/*/**", "package.json", "tsconfig.json"]
 	}
 }

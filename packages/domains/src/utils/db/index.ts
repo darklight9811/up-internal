@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/bun-sql";
+import { drizzle } from "drizzle-orm/postgres-js";
 
 // schemas
 import * as appTables from "../../domains/app/server/table.server";

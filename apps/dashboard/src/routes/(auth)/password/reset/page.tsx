@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
-import { serverLoader } from "src/utils/server-loader";
+import { z } from "zod/v4";
 
 import { Submit } from "@repo/ds/hooks/use-form";
 import { useSearch } from "@repo/ds/hooks/use-search";
 import { useTranslation } from "@repo/ds/lib/localization";
-import v from "@repo/ds/lib/v/index";
 
+import { trpc } from "@repo/domains";
 import { metadata } from "@repo/domains/app";
 import { AuthResetPassword } from "@repo/domains/auth";
 
-import { trpc } from "@repo/domains";
+import { serverLoader } from "src/utils/server-loader";
 
 export const loader = serverLoader(async ({ getTranslations }) => {
 	const t = await getTranslations("auth");
@@ -30,7 +30,7 @@ export const meta = metadata<typeof loader>(({ data }) => ({
 export default function ResetPasswordPage() {
 	const { t } = useTranslation("auth");
 	const navigate = useNavigate();
-	const [{ token }] = useSearch(v.object({ token: v.string().optional() }));
+	const [{ token }] = useSearch(z.object({ token: z.string().optional() }));
 
 	const { mutate: resetPassword, error } = useMutation(
 		trpc.auth.resetPassword.mutationOptions({
@@ -44,30 +44,17 @@ export default function ResetPasswordPage() {
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen p-6 gap-8">
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="text-3xl font-bold">
-					{t("resetPassword.title")}
-				</h1>
-				<p className="text-gray-300 max-w-md">
-					{t("resetPassword.description")}
-				</p>
+				<h1 className="text-3xl font-bold">{t("resetPassword.title")}</h1>
+				<p className="text-gray-300 max-w-md">{t("resetPassword.description")}</p>
 			</div>
 
 			<div className="w-full max-w-sm">
-				<AuthResetPassword
-					token={token}
-					onSubmit={resetPassword}
-					errors={error}
-				>
-					<Submit variant="primary">
-						{t("resetPassword.submit")}
-					</Submit>
+				<AuthResetPassword token={token} onSubmit={resetPassword} errors={error}>
+					<Submit variant="primary">{t("resetPassword.submit")}</Submit>
 				</AuthResetPassword>
 
 				<div className="mt-6 text-center">
-					<Link
-						to="/login"
-						className="text-sm text-blue-600 hover:text-blue-800"
-					>
+					<Link to="/login" className="text-sm text-blue-600 hover:text-blue-800">
 						{t("resetPassword.backToLogin")}
 					</Link>
 				</div>

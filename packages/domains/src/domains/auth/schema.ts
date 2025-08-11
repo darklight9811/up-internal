@@ -1,36 +1,36 @@
-import { v } from "@repo/ds/v";
+import { z } from "zod/v4";
 
-export const registerSchema = v.object({
-	name: v.string().min(2),
-	email: v.email(),
-	password: v.string(),
-	locale: v.string().optional(),
+export const registerSchema = z.object({
+	name: z.string().min(2),
+	email: z.email(),
+	password: z.string(),
+	locale: z.string().optional(),
 });
 
-export type RegisterSchema = v.infer<typeof registerSchema>;
+export type RegisterSchema = z.infer<typeof registerSchema>;
 
-export const loginSchema = v.object({
-	email: v.email().min(5),
-	password: v.string().min(8),
+export const loginSchema = z.object({
+	email: z.email().min(5),
+	password: z.string().min(8),
 });
 
-export type LoginSchema = v.infer<typeof loginSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>;
 
-export const verifyEmailSchema = v.object({
-	token: v.string(),
+export const verifyEmailSchema = z.object({
+	token: z.string(),
 });
 
-export type VerifyEmailSchema = v.infer<typeof verifyEmailSchema>;
+export type VerifyEmailSchema = z.infer<typeof verifyEmailSchema>;
 
-export const forgotPasswordSchema = v.object({
-	email: v.email(),
+export const forgotPasswordSchema = z.object({
+	email: z.email(),
 });
 
-export type ForgotPasswordSchema = v.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>;
 
-export const resetPasswordSchema = v.object({
-	token: v.string(),
-	password: v.string().min(8),
+export const resetPasswordSchema = z.object({
+	token: z.string(),
+	password: z.string().min(8),
 });
 
-export type ResetPasswordSchema = v.infer<typeof resetPasswordSchema>;
+export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
