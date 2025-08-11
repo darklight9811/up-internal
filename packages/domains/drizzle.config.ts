@@ -33,7 +33,7 @@ globalThis.CompressionStream ??= CompressionStream;
 globalThis.DecompressionStream ??= CompressionStream;
 
 export default defineConfig({
-	out: "./drizze",
+	out: "./drizzle",
 	schema: ["./src/domains/*/server/table.server.ts"],
 	dialect: "postgresql",
 	dbCredentials: {

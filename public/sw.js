@@ -1,4 +1,4 @@
-const CACHE = "up-internal-cache";
+const CACHE = "app-cache";
 const offlineFallbackPage = "/offline";
 const CACHE_FIRST_DOMAINS = ['raw.githack.com', 'raw.githubusercontent.com'];
 

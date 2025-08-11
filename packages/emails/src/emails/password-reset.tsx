@@ -1,3 +1,5 @@
+import { env } from "@repo/domains/app";
+
 import { useMessages } from "../lib/localization";
 import { Structure } from "../lib/structure";
 
@@ -38,7 +40,7 @@ export function sendPasswordResetEmail(props: {
 	const t = useMessages(props.locale, "reset");
 
 	return {
-		from: "Suporte <noreply@up.com.br>",
+		from: `Suporte <noreply@${env.domain}`,
 		to: props.email,
 		subject: t("title"),
 		react: <PasswordResetEmail url={props.url} locale={props.locale} />,

@@ -12,10 +12,10 @@ export const loader = serverLoader(async ({ getTranslations, request }) => {
 	return new Response(
 		JSON.stringify({
 			version: env.version,
-			id: "/up-interno",
+			id: `/${env.domain.split(".")[0]}`,
 			lang: locale,
-			name: "UP interno",
-			short_name: "UP interno",
+			name: env.name,
+			short_name: env.name,
 			description: t("description"),
 			keywords: t("keywords")
 				.split(",")

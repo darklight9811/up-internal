@@ -2,6 +2,7 @@ import v from "@repo/ds/v";
 
 const schema = v.object({
 	name: v.string(),
+	domain: v.string(),
 	version: v.string().default("0.3.2"),
 	secret: v.string().default("secret"),
 	resend: v.string().default(""),
@@ -12,7 +13,8 @@ const schema = v.object({
 });
 
 export const env = schema.parse({
-	name: "UP interno",
+	name: "Worker Party",
+	domain: "workerparty.com.br",
 	version:
 		typeof process !== "undefined" && process.env.VITE_APP_VERSION
 			? process.env.VITE_APP_VERSION

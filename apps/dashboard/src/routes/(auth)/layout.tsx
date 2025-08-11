@@ -6,11 +6,7 @@ import { authService } from "@repo/domains/auth/server";
 export const loader = serverLoader(async ({ cookies, pathname }) => {
 	const user = await authService.session(cookies.get("token"));
 
-	if (
-		user &&
-		(["/anonymous"].includes(pathname) ||
-			(!user.isAnonymous && ["/register", "/login"].includes(pathname)))
-	)
+	if (user && !user.isAnonymous && ["/register", "/login"].includes(pathname))
 		return redirect("/");
 });
 

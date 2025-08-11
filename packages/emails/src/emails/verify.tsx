@@ -1,5 +1,7 @@
 import { Text } from "@react-email/components";
 
+import { env } from "@repo/domains/app";
+
 import { useMessages } from "../lib/localization";
 import { Structure } from "../lib/structure";
 
@@ -40,7 +42,7 @@ export function sendVerifyEmail({
 	const t = useMessages(locale, "email");
 
 	return {
-		from: "Suporte <noreply@up.com.br>",
+		from: `Suporte <noreply@${env.domain}`,
 		to: email,
 		subject: t("title"),
 		react: <Verify url={url} locale={locale} />,

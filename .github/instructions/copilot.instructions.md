@@ -14,7 +14,7 @@ The Internal dashboard is a React-based application built with a modern monorepo
 This is a **Bun workspace** monorepo with the following structure:
 
 ```
-up-internal/
+workspace/
 ├── apps/
 │   └── app/                     # Main React Router v7 application
 ├── packages/

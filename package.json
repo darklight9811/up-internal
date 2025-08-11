@@ -1,5 +1,5 @@
 {
-	"name": "up-internal",
+	"name": "root",
 	"type": "module",
 	"private": true,
 	"scripts": {
