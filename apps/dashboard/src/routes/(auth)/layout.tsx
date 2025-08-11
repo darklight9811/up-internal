@@ -16,14 +16,8 @@ export const loader = serverLoader(async ({ cookies, pathname }) => {
 
 export default function AuthLayout() {
 	return (
-		<div className="grow flex flex-col justify-end items-center w-full mx-auto overflow-hidden relative">
-			<div className="mx-[20%] w-full mb-[12%] max-w-sm">
-				<img src="/logo.png" alt="logo" className="w-full" />
-			</div>
-
-			<div className="bg-secondary shadow-top text-white w-full p-8 border-t-2 border-white rounded-t-xl">
-				<Outlet />
-			</div>
+		<div className="grow flex justify-center items-center w-full max-w-sm mx-auto">
+			<Outlet />
 		</div>
 	);
 }

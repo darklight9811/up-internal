@@ -5,14 +5,14 @@ import type * as React from "react";
 import { cn } from "@repo/ds/lib/utils";
 
 const buttonVariants = cva(
-	"hover:cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+	"hover:cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
 	{
 		variants: {
 			variant: {
 				default:
-					"bg-g-1 border-2 text-primary-foreground shadow-depth hover:bg-[#331D1A]",
+					"bg-primary text-primary-foreground hover:bg-[#331D1A]",
 				primary:
-					"bg-g-2 border-2 text-primary-foreground shadow-depth hover:bg-[#331D1A]",
+					"bg-primary text-primary-foreground hover:bg-[#331D1A]",
 				destructive:
 					"bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
 				outline:
