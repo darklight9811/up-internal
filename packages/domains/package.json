@@ -1,0 +1,42 @@
+{
+	"name": "@repo/domains",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/domains/index.ts",
+		"./*": "./src/domains/*/index.ts",
+		"./server": "./src/server.ts",
+		"./utils/*": "./src/utils/*.ts"
+	},
+	"license": "MIT",
+	"scripts": {
+		"verify": "biome check --error-on-warnings ./src",
+		"db": "bun --bun --env-file=../../.env --env-file=../../.env.local drizzle-kit",
+		"test": "bun test"
+	},
+	"devDependencies": {
+		"@faker-js/faker": "^9.9.0",
+		"@types/bun": "^1.2.20",
+		"drizzle-kit": "^0.31.4",
+		"typescript": "catalog:"
+	},
+	"dependencies": {
+		"@legendapp/state": "catalog:",
+		"@repo/ds": "workspace:*",
+		"@repo/emails": "workspace:*",
+		"@tanstack/react-query": "catalog:",
+		"@trpc/client": "^11.4.4",
+		"@trpc/server": "^11.4.4",
+		"@trpc/tanstack-react-query": "^11.4.4",
+		"@uploadthing/react": "^7.3.2",
+		"better-auth": "^1.3.4",
+		"drizzle-cuid2": "1.0.5",
+		"drizzle-orm": "^0.44.4",
+		"lucide-react": "catalog:",
+		"react": "catalog:",
+		"superjson": "^2.2.2",
+		"uploadthing": "^7.7.3",
+		"zod": "catalog:"
+	}
+}

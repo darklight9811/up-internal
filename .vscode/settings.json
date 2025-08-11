@@ -1,0 +1,23 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit"
+	},
+	"editor.defaultFormatter": "biomejs.biome",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"files.associations": {
+		"*.json": "jsonc",
+		".env.local": "properties",
+		".local.env": "properties"
+	},
+	"workbench.editor.customLabels.patterns": {
+		"**/routes/**/page.tsx": "${dirname} - Page",
+		"**/routes/**/index.tsx": "${dirname} - Index",
+		"**/routes/**/layout.tsx": "${dirname} - Layout",
+		"**/routes/**/template.tsx": "${dirname} - Template",
+		"**/components/**/index.tsx": "${dirname} - Component"
+	},
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"tailwindCSS.classFunctions": ["cva", "cx"],
+	"github.copilot.chat.codeGeneration.useInstructionFiles": true
+}

@@ -1,0 +1,41 @@
+{
+	"logout": "Logout",
+	"register-email": "Register email",
+	"version": "Prototype {{version}}",
+	"start": "Start",
+	"logged": "Logged in as",
+	"gameover": "Game over",
+	"restart": "Restart",
+	"loading": "Loading",
+	"highscore": "Highscores",
+	"back": "Back",
+	"highscore-auth": "To view your highscore, please sign in or register.",
+	"login": "Login",
+	"register": "Register",
+	"you": "you",
+	"tutorial": {
+		"collect": "Click on objects around the train to collect them"
+	},
+	"feedback": {
+		"title": "Feedback",
+		"description": "Please leave your feedback about the game.",
+		"fields": {
+			"score": "Score",
+			"description": "Would you like to share anything else?"
+		},
+		"submit": "Submit",
+		"success": "Thank you for your feedback!"
+	},
+	"legal": {
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service"
+	},
+	"update": "Update",
+	"config": "Settings",
+	"userUpdate": {
+		"title": "User update",
+		"description": "Update your user information here",
+		"success": "User information updated successfully!"
+	},
+	"createdBy": "created by"
+}

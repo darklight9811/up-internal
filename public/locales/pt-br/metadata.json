@@ -1,0 +1,9 @@
+{
+	"description": "Um jogo idle clicker onde você gerencia uma companhia ferroviária, constrói trens e expande seu império.",
+	"keywords": "jogo, idle, clicker, ferrovia, gerenciamento, trens",
+	"highscore": {
+		"title": "Pontuação",
+		"upper": "Minha pontuação foi",
+		"lower": "Consegue superar?"
+	}
+}

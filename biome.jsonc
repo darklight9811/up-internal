@@ -1,0 +1,66 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noNonNullAssertion": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "off"
+			},
+			"correctness": {
+				"noChildrenProp": "off"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "off"
+			}
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							":BUN:",
+							":NODE:",
+							":BLANK_LINE:",
+							[":PACKAGE:", "!@repo/**"],
+							[":PACKAGE_WITH_PROTOCOL:", "!@repo/**"],
+							":URL:",
+							":BLANK_LINE:",
+							"@repo/ds/**",
+							":BLANK_LINE:",
+							"@repo/domains/**",
+							":BLANK_LINE:",
+							"modules/**/*",
+							":ALIAS:",
+							":PATH:"
+						]
+					}
+				}
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineEnding": "lf"
+	},
+	"javascript": {
+		"globals": ["React", "JSX"]
+	},
+	"files": {
+		"includes": [
+			"!node_modules/**/*",
+			"packages/*/**",
+			"apps/*/**",
+			"package.json",
+			"tsconfig.json"
+		]
+	}
+}

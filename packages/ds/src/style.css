@@ -1,0 +1,100 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@source "../src/**/*.{ts,tsx}";
+@source "../../domains/src/**/*.{ts,tsx}";
+@source "../../../apps/app/src/**/*.{ts,tsx}";
+
+:root {
+	--foreground: oklch(20.77% 0.04 265.75);
+	--background: oklch(1 0 0);
+	--primary: hsl(0, 46%, 35%);
+	--primary-foreground: hsl(210 40% 98%);
+	--secondary: #331d1a;
+	--secondary-foreground: hsl(210 40% 98%);
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-foreground: oklch(0.577 0.245 27.325);
+	--border: #121212;
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+	--radius: 0.625rem;
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--shadow-top: 0 -12px 50px -12px rgba(0, 0, 0, 0.5);
+	--shadow-depth:
+		inset 0 4px rgba(255, 255, 255, 0.2), inset 0 -4px rgba(0, 0, 0, 0.2);
+
+	--animate-fade-in: fade-in 0.4s ease forwards;
+	--animate-fade-out: fade-in 0.4s ease reverse forwards;
+	--animate-top-in: top-in 0.4s ease forwards;
+	--animate-ghost-out: ghost-out 1s ease forwards;
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes top-in {
+		from {
+			transform: translateY(-20px);
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes ghost-out {
+		0% {
+			opacity: 0;
+		}
+		5% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+	}
+}
+
+.bg-pattern {
+	background: 150px url(/textures/pattern.png);
+}
+
+.bg-g-1 {
+	@apply !bg-gradient-to-t from-[#331d1a] to-[#502e2a];
+}
+.bg-g-2 {
+	@apply !bg-gradient-to-t from-secondary to-primary;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}

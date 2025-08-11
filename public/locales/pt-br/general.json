@@ -1,0 +1,41 @@
+{
+	"logout": "Sair",
+	"register-email": "Registrar e-mail",
+	"version": "Versão {{version}}",
+	"start": "Iniciar",
+	"logged": "Conectado como",
+	"gameover": "Fim de jogo",
+	"restart": "Reiniciar",
+	"loading": "Carregando",
+	"highscore": "Recordes",
+	"back": "Voltar",
+	"highscore-auth": "Para visualizar seu recorde, por favor, faça login ou registre-se.",
+	"login": "Entrar",
+	"register": "Registrar",
+	"you": "você",
+	"tutorial": {
+		"collect": "Clique em objetos em volta do trem para coletá-los"
+	},
+	"feedback": {
+		"title": "Feedback",
+		"description": "Por favor, deixe seu feedback sobre o jogo.",
+		"fields": {
+			"score": "Pontuação",
+			"description":"Gostaria de compartilhar algo mais?"
+		},
+		"submit": "Enviar",
+		"success": "Obrigado pelo seu feedback!"
+	},
+	"legal": {
+		"privacy": "Politica de Privacidade",
+		"terms": "Termos de Serviço"
+	},
+	"update": "Atualizar",
+	"config": "Configurações",
+	"userUpdate": {
+		"title": "Atualização de usuário",
+		"description": "Atualize suas informações de usuário aqui",
+		"success": "Informações do usuário atualizadas com sucesso!"
+	},
+	"createdBy": "criado por"
+}

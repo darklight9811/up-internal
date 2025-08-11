@@ -1,0 +1,20 @@
+import { createLucideIcon } from "lucide-react";
+
+export const TicketIcon = createLucideIcon("TicketIcon", [
+	[
+		"path",
+		{
+			d: "M17 23H15C15 21.3431 13.6569 20 12 20C10.3431 20 9 21.3431 9 23H7L7 1L9 1C9 2.65685 10.3431 4 12 4C13.6569 4 15 2.65685 15 1L17 1V23Z",
+			fill: "#F35050",
+			key: "1",
+		},
+	],
+	[
+		"path",
+		{
+			d: "M8.89395 5.14443H14.894V18.6435H8.89395V5.14443Z",
+			fill: "#EEA850",
+			key: "2",
+		},
+	],
+]);

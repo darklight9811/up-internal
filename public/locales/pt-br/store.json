@@ -1,0 +1,15 @@
+{
+	"title": "Loja",
+	"inventory": "Inventário",
+	"purchase": "Comprar",
+	"already-purchased": "Já comprado",
+	"cant-purchase": "Sem fundos para comprar",
+	"activate": "Ativar",
+	"deactivate": "Desativar",
+	"items": {
+		"train-green": {
+			"name": "Trenzinho verde",
+			"description": "Igual o bom e velho trem que você já conhecia, mas verde."
+		}
+	}
+}

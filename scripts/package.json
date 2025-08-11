@@ -1,0 +1,18 @@
+{
+	"name": "scripts",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"locale": "bun --bun src/locale.ts",
+		"coverage": "bun --bun src/coverage.ts"
+	},
+	"exports": {
+		"./*": "./src/*.ts"
+	},
+	"devDependencies": {
+		"@types/lcov-parse": "^1.0.2"
+	},
+	"dependencies": {
+		"lcov-parse": "^1.0.0"
+	}
+}

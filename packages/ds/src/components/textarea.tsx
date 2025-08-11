@@ -1,0 +1,29 @@
+import type * as React from "react";
+
+import { cn } from "../lib/utils";
+
+function Textarea({
+	className,
+	onChange,
+	value,
+	...props
+}: Omit<React.ComponentProps<"textarea">, "onChange" | "value"> & {
+	value?: string | null | undefined;
+	onChange?(value: string, event: unknown): void;
+}) {
+	return (
+		<textarea
+			className={cn(
+				"bg-primary/50 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+				"focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+				"aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+				className,
+			)}
+			onChange={(e) => onChange?.(e.currentTarget.value, e)}
+			value={value || ""}
+			{...props}
+		/>
+	);
+}
+
+export { Textarea };
