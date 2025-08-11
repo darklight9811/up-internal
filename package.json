@@ -3,16 +3,16 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"dev": "bun --bun --cwd ./apps/app dev",
-		"build": "bun --bun --cwd ./apps/app build",
-		"start": "bun --bun --cwd ./apps/app start",
+		"dev": "bun --bun --cwd ./apps/dashboard dev",
+		"build": "bun --bun --cwd ./apps/dashboard build",
+		"start": "bun --bun --cwd ./apps/dashboard start",
 		"verify": "bun --bun --filter=\"*\" verify --",
 		"lint": "bun --bun --filter=\"*\" lint --",
 		"test": "bun --bun test --filter=\"*\"",
 		"ds": "cd packages/ds && bun",
 		"db": "cd packages/domains && bun --bun db",
 		"email": "cd packages/emails && bun dev",
-		"symlink": "symlink-dir ./public ./apps/app/public",
+		"symlink": "symlink-dir ./public ./apps/dashboard/public",
 		"postinstall": "bun run symlink"
 	},
 	"devDependencies": {

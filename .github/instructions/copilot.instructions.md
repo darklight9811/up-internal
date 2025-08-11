@@ -38,7 +38,7 @@ up-internal/
 
 ## Package Architecture
 
-### 1. `apps/app` - Main Application
+### 1. `apps/dashboard` - Main Application
 - **Purpose**: React Router v7 SSR application
 - **Key Files**:
   - `src/entry.client.tsx` - Client entry point
@@ -151,7 +151,7 @@ bun db               # Access database commands
 
 ### Package Level
 ```bash
-# In apps/app/
+# In apps/dashboard/
 bun dev              # Development server
 bun build            # Build application
 bun verify           # Lint this package
@@ -186,7 +186,7 @@ bun verify           # Lint this package
 
 ### 4. Asset Management
 - **Public Assets**: Store in `public/` directory
-- **Symlink**: Assets are symlinked to `apps/app/public/`
+- **Symlink**: Assets are symlinked to `apps/dashboard/public/`
 - **Models**: Prefer `.glb` format for 3D models
 - **Textures**: Optimize images for web use
 

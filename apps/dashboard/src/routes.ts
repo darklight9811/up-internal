@@ -16,8 +16,6 @@ export default [
 			route("/forgot", "./routes/(auth)/password/forgot/page.tsx"),
 			route("/reset", "./routes/(auth)/password/reset/page.tsx"),
 		]),
-
-		route("/anonymous", "./routes/(auth)/anonymous/page.tsx"),
 	]),
 
 	// General

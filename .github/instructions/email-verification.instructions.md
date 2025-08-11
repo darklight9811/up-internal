@@ -37,7 +37,7 @@ The project uses better-auth for authentication with email verification. The sys
 - Handle both manual token input and automatic URL verification
 
 ### 7. Page Routes
-- Create verification page at `apps/app/src/routes/(auth)/verify/page.tsx`
+- Create verification page at `apps/dashboard/src/routes/(auth)/verify/page.tsx`
 - Handle URL parameters for automatic verification
 - Provide manual verification form and resend functionality
 
@@ -231,7 +231,7 @@ packages/domains/src/domains/auth/
 ├── schema.ts                    # Updated with verification schema
 └── index.ts                     # Export verification component
 
-apps/app/src/routes/(auth)/
+apps/dashboard/src/routes/(auth)/
 ├── login/
 ├── register/                    # Updated to redirect to /verify
 └── verify/                      # New verification page

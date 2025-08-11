@@ -3,7 +3,7 @@
 
 @source "../src/**/*.{ts,tsx}";
 @source "../../domains/src/**/*.{ts,tsx}";
-@source "../../../apps/app/src/**/*.{ts,tsx}";
+@source "../../../apps/dashboard/src/**/*.{ts,tsx}";
 
 :root {
 	--foreground: oklch(20.77% 0.04 265.75);

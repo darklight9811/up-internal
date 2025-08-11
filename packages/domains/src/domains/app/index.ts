@@ -1,7 +1,5 @@
 // Client
 export { app$ } from "./client";
-// Components
-export { PauseDialog } from "./components/pause-dialog";
 // General
 export { env } from "./env";
 // Helpers
