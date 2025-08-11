@@ -1,9 +1,11 @@
 import { cuid2 } from "drizzle-cuid2/postgres";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
 	boolean,
+	geometry,
 	integer,
 	json,
+	type PgColumn,
 	pgEnum,
 	pgTableCreator,
 	text,
@@ -24,8 +26,14 @@ export const c = {
 	json: json,
 	int: integer,
 	relations,
+	geometry,
 	stamp: () => ({
 		createdAt: timestamp().notNull().defaultNow(),
 		updatedAt: timestamp(),
 	}),
+};
+
+export const bitwise = {
+	has: (column: PgColumn, value: number) =>
+		sql`(${column} & ${value}) = ${value}`,
 };
