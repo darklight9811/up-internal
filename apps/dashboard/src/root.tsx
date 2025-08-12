@@ -43,11 +43,7 @@ export const links: LinksFunction = () => [
 		rel: "icon",
 		type: "image/png",
 		href:
-			env.type === "prod"
-				? "/icon.png"
-				: env.app_url.includes("localhost")
-					? "/icon-local.png"
-					: "/icon-dev.png",
+			env.type === "prod" ? "/icon.png" : env.app_url.includes("localhost") ? "/icon-local.png" : "/icon-dev.png",
 	},
 ];
 
@@ -57,10 +53,7 @@ export const unstable_middleware = [i18nextMiddleware];
  * ### MARK: Loader
  */
 export const loader = serverLoader(async ({ request, cookies }) => {
-	const [locale, user] = await Promise.all([
-		i18next.getLocale(request),
-		authService.session(cookies.get("token")),
-	]);
+	const [locale, user] = await Promise.all([i18next.getLocale(request), authService.session(cookies.get("token"))]);
 
 	return { locale, user };
 });
@@ -78,11 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	const { i18n } = useTranslation();
 
 	return (
-		<html
-			lang={loaderData?.locale}
-			dir={i18n.dir()}
-			className="h-full scroll-smooth"
-		>
+		<html lang={loaderData?.locale} dir={i18n.dir()} className="h-full scroll-smooth">
 			<head>
 				<meta charSet="utf-8" />
 				<meta
@@ -92,19 +81,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<link rel="manifest" href="/manifest.webmanifest" />
-				<meta
-					name="apple-mobile-web-app-status-bar-style"
-					content="black-translucent"
-				/>
+				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 				<Meta />
 				<Links />
 			</head>
 			<body className="flex flex-col h-full bg-[url(/textures/pattern.png)] bg-[size:150px]">
 				<div className="grow w-full flex h-screen">
-					<div
-						id="content"
-						className="flex flex-col w-full grow relative"
-					>
+					<div id="content" className="flex flex-col w-full grow relative">
 						{children}
 					</div>
 				</div>
@@ -120,10 +103,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
  */
 export default function App() {
 	useEffect(() => {
-		if (
-			typeof window !== "undefined" &&
-			typeof navigator.serviceWorker !== "undefined"
-		) {
+		if (typeof window !== "undefined" && typeof navigator.serviceWorker !== "undefined") {
 			navigator.serviceWorker.register("/sw.js");
 		}
 	}, []);
@@ -146,10 +126,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
 	if (isRouteErrorResponse(error)) {
 		message = error.status === 404 ? "404" : "Error";
-		details =
-			error.status === 404
-				? "The requested page could not be found."
-				: error.statusText || details;
+		details = error.status === 404 ? "The requested page could not be found." : error.statusText || details;
 	} else if (import.meta.env.DEV && error && error instanceof Error) {
 		details = error.message;
 		stack = error.stack;
@@ -157,16 +134,12 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
 	return (
 		<main className="pt-16 p-4 container mx-auto grow flex flex-col items-center justify-center gap-4">
-			<img
-				alt="logo"
-				src="/logo.png"
-				className="w-full max-w-sm mx-auto"
-			/>
+			<img alt="logo" src="/logo.png" className="w-full max-w-sm mx-auto" />
 
 			<h1 className="text-3xl font-bold">{message}</h1>
 			<p className="">{details}</p>
 			{stack && (
-				<pre className="w-full p-4 overflow-x-auto bg-g-1 shadow-depth rounded-lg text-white overflow-hidden">
+				<pre className="w-full p-4 overflow-x-auto bg-gray-700 shadow-depth rounded-lg text-white overflow-hidden">
 					<code>{stack}</code>
 				</pre>
 			)}

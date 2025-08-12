@@ -12,7 +12,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
 			offset={52}
 			mobileOffset={52}
 			toastOptions={{
-				className: "bg-g-1",
+				className: "bg-background",
 				classNames: {
 					toast: "!shadow-depth",
 				},
