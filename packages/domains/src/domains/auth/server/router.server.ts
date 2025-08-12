@@ -1,25 +1,9 @@
 import { t } from "../../../utils/trpc";
 import { auth } from "../helpers/auth.server";
-import {
-	forgotPasswordSchema,
-	loginSchema,
-	registerSchema,
-	resetPasswordSchema,
-	verifyEmailSchema,
-} from "../schema";
+import { forgotPasswordSchema, loginSchema, registerSchema, resetPasswordSchema, verifyEmailSchema } from "../schema";
 import { authService } from "./service.server";
 
 export const authRouter = t.router({
-	anonymous: t.route.mutation(async ({ ctx }) => {
-		const response = await auth.api.signInAnonymous({
-			request: ctx.req,
-		});
-
-		if (response?.token) ctx.cookie.set("token", response.token);
-
-		return response?.user;
-	}),
-
 	register: t.route.input(registerSchema).mutation(async ({ input, ctx }) => {
 		const response = await auth.api.signUpEmail({
 			body: input,
@@ -56,14 +40,12 @@ export const authRouter = t.router({
 		ctx.cookie.remove("token");
 	}),
 
-	verifyEmail: t.protected
-		.input(verifyEmailSchema)
-		.mutation(async ({ input, ctx }) => {
-			return auth.api.verifyEmail({
-				request: ctx.req,
-				query: { token: input.token },
-			});
-		}),
+	verifyEmail: t.protected.input(verifyEmailSchema).mutation(async ({ input, ctx }) => {
+		return auth.api.verifyEmail({
+			request: ctx.req,
+			query: { token: input.token },
+		});
+	}),
 
 	sendVerificationEmail: t.protected.mutation(async ({ ctx }) => {
 		const token = ctx.cookie.get("token");
@@ -77,21 +59,17 @@ export const authRouter = t.router({
 		});
 	}),
 
-	forgotPassword: t.route
-		.input(forgotPasswordSchema)
-		.mutation(async ({ input, ctx }) => {
-			return auth.api.forgetPassword({ body: input, request: ctx.req });
-		}),
+	forgotPassword: t.route.input(forgotPasswordSchema).mutation(async ({ input, ctx }) => {
+		return auth.api.forgetPassword({ body: input, request: ctx.req });
+	}),
 
-	resetPassword: t.route
-		.input(resetPasswordSchema)
-		.mutation(async ({ input, ctx }) => {
-			return auth.api.resetPassword({
-				body: {
-					token: input.token,
-					newPassword: input.password,
-				},
-				request: ctx.req,
-			});
-		}),
+	resetPassword: t.route.input(resetPasswordSchema).mutation(async ({ input, ctx }) => {
+		return auth.api.resetPassword({
+			body: {
+				token: input.token,
+				newPassword: input.password,
+			},
+			request: ctx.req,
+		});
+	}),
 });

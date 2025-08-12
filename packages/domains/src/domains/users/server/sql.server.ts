@@ -2,7 +2,7 @@ import { count, eq, or } from "drizzle-orm";
 
 import { db } from "../../../utils/db";
 import type { PaginationSchema } from "../../app/schema";
-import type { UserSchema, UserSystemSchema } from "../schema";
+import type { UserSystemSchema } from "../schema";
 import { users } from "./table.server";
 
 /**
@@ -41,7 +41,7 @@ export const userSQL = {
 	async show(id: string, _user?: UserSystemSchema) {
 		return db.query.users.findFirst({
 			where: (table, { eq }) => eq(table.id, id),
-		}) as Promise<UserSchema>;
+		});
 	},
 
 	/**

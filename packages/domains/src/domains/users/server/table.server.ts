@@ -11,6 +11,7 @@ export const users = c.table("users", {
 	email: c.varchar().notNull().unique(),
 	emailVerified: c.boolean().default(false).notNull(),
 	isAnonymous: c.boolean().default(false).notNull(),
+	socialNumber: c.varchar().notNull().unique(),
 
 	createdAt: c.timestamp().notNull().defaultNow(),
 	updatedAt: c.timestamp(),

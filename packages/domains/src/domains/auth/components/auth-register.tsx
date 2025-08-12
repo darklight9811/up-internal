@@ -3,6 +3,7 @@ import { useTranslation } from "@repo/ds/lib/localization";
 import { ErrorAlert } from "@repo/ds/ui/alert";
 import { Input } from "@repo/ds/ui/input";
 
+import { masks } from "../../../utils/masks";
 import { type RegisterSchema, registerSchema } from "../schema";
 
 export interface AuthRegisterProps {
@@ -17,9 +18,10 @@ export function AuthRegister(props: AuthRegisterProps) {
 			name: "",
 			email: "",
 			password: "",
+			socialNumber: "",
 		},
 		validators: {
-			onChange: registerSchema,
+			onSubmit: registerSchema,
 		},
 		onSubmit: ({ value }) => props.onSubmit?.(value),
 	});
@@ -29,17 +31,23 @@ export function AuthRegister(props: AuthRegisterProps) {
 		<>
 			<ErrorAlert error={props.errors} />
 
-			<form.Form
-				form={form}
-				className="flex flex-col w-full *:animate-top-in"
-			>
+			<form.Form form={form} className="flex flex-col w-full *:animate-top-in">
 				<form.AppField
 					name="name"
 					children={(field) => (
 						<form.Fieldset label={t("fields.name")}>
+							<Input value={field.state.value} onChange={field.handleChange} />
+						</form.Fieldset>
+					)}
+				/>
+				<form.AppField
+					name="socialNumber"
+					children={(field) => (
+						<form.Fieldset label={t("fields.socialNumber")}>
 							<Input
+								type="socialNumber"
 								value={field.state.value}
-								onChange={field.handleChange}
+								onChange={(v) => field.handleChange(masks.cpf(v))}
 							/>
 						</form.Fieldset>
 					)}
@@ -48,11 +56,7 @@ export function AuthRegister(props: AuthRegisterProps) {
 					name="email"
 					children={(field) => (
 						<form.Fieldset label={t("fields.email")}>
-							<Input
-								type="email"
-								value={field.state.value}
-								onChange={field.handleChange}
-							/>
+							<Input type="email" value={field.state.value} onChange={field.handleChange} />
 						</form.Fieldset>
 					)}
 				/>
@@ -60,11 +64,7 @@ export function AuthRegister(props: AuthRegisterProps) {
 					name="password"
 					children={(field) => (
 						<form.Fieldset label={t("fields.password")}>
-							<Input
-								type="password"
-								value={field.state.value}
-								onChange={field.handleChange}
-							/>
+							<Input type="password" value={field.state.value} onChange={field.handleChange} />
 						</form.Fieldset>
 					)}
 				/>

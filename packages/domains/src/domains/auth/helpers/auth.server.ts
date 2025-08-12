@@ -4,6 +4,7 @@ import { bearer } from "better-auth/plugins/bearer";
 
 import { db } from "../../../utils/db";
 import { email } from "../../../utils/email";
+import { masks } from "../../../utils/masks";
 import { env } from "../../app/env";
 import { users } from "../../users/server/table.server";
 import { accounts, sessions, verifications } from "../server/table.server";
@@ -45,11 +46,24 @@ export const auth = betterAuth({
 				sendVerifyEmail({
 					email: data.user.email,
 					url: `${data.url.split("auth/verify-email")[0]}verify?${data.url.split("?")[1]}`,
-					locale: (await locale.getLocale(request!)) as
-						| "pt-br"
-						| "en-us",
+					locale: (await locale.getLocale(request!)) as "pt-br" | "en-us",
 				}),
 			);
+		},
+	},
+	user: {
+		additionalFields: {
+			socialNumber: {
+				type: "string",
+				required: true,
+				returned: false,
+				sortable: true,
+				unique: true,
+				transform: {
+					input: (e) => masks.cpf(e as string),
+					output: (e) => masks.cpf(e as string),
+				},
+			},
 		},
 	},
 	emailAndPassword: {
@@ -62,9 +76,7 @@ export const auth = betterAuth({
 				sendPasswordResetEmail({
 					email: data.user.email,
 					url: `${data.url.split("auth/reset-password")[0]}password/reset?token=${data.token}`,
-					locale: (await locale.getLocale(request!)) as
-						| "pt-br"
-						| "en-us",
+					locale: (await locale.getLocale(request!)) as "pt-br" | "en-us",
 				}),
 			);
 		},

@@ -1,13 +1,10 @@
+import { env } from "@repo/domains/app";
+
 import i18next from "src/utils/i19next.server";
 import { serverLoader } from "src/utils/server-loader";
 
-import { env } from "@repo/domains/app";
-
 export const loader = serverLoader(async ({ getTranslations, request }) => {
-	const [t, locale] = await Promise.all([
-		getTranslations("metadata"),
-		i18next.getLocale(request),
-	]);
+	const [t, locale] = await Promise.all([getTranslations("metadata"), i18next.getLocale(request)]);
 
 	return new Response(
 		JSON.stringify({
@@ -40,12 +37,7 @@ export const loader = serverLoader(async ({ getTranslations, request }) => {
 			},
 			icons: [
 				{
-					src:
-						env.type === "prod"
-							? "/icon.png"
-							: env.app_url.includes("localhost")
-								? "/icon-local.png"
-								: "/icon-dev.png",
+					src: "/icon.png",
 					sizes: "512x512",
 					type: "image/png",
 				},
