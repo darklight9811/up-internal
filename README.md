@@ -11,12 +11,13 @@ WorkerParty is an app to help organize political parties, its meant to be open-s
 
 ## Installation
 
-To install it, you will need: [bunjs](bun.sh), a postgres server and a [resend account](https://resend.com/) and knowledge using git, typescript, react and others. To copy the repository locally (in the directory that you prefer):
+To install it, you will need: [bunjs](bun.sh), a postgres server, a [resend account](https://resend.com/) and knowledge using git, typescript, react and others. To copy the repository locally (in the directory that you prefer):
 
 ```
 git clone https://github.com/darklight9811/workerparty
 ```
 
+Then you can install the code dependencies using:
 ```
 bun i
 ```
