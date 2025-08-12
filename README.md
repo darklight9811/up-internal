@@ -39,57 +39,72 @@ The codebase is a monorepo, meant to clearly separate concerns and code for reus
 
 ```
 workerparty/
+|	// any application that will be deployed to the final user
 ├── apps/
-|	|	// any application that will be deployed to the final user
-|	├── dashboard/
-├── packages/
-│   ├── domains/src/
-|	|	|	// Domains are features in their indisible concern, also called business domains
-|	|	├── domains/(domain)/
-|	|	|	// Each domain contain an index that is meant for client/server exports (needs to work for both client and server)
-|	|	|	├── components/
-|	|	|	|	// All frontend components that have visual and domain logic
-|	|	|	|
-|	|	|	├── server/
-|	|	|	|	// All backend code that won't be available to the frontend, you can create an index to export the service (don't export any sql/table file)
-|	|	|	|	├── router.server.ts
-|	|	|	|	|	// the trpc router unit of that domain
-|	|	|	|	├── service.server.ts
-|	|	|	|	|	// the service that contains the business logic for the domain
-|	|	|	|	├── sql.server.ts
-|	|	|	|	|	// the sql queries that interact with database, later on we can migrate to raw sql to increase performance
-|	|	|	|	└── table.server.ts
-|	|	|	|		// the sql table that composes the database structure and relations of the domain
-|	|	|	|
-|	|	|	└── schema.ts
-|	|	|		// The validation schema that can be reused for both the backend and the frontend
-|	|	└── server.ts
-|	|		// after creating a router in one of the domains, update this file to make it available in the trpc ecosystem
 |	|
+|	└── dashboard/
+|
+├── packages/
+|	|	// Domains are features in their indisible concern, also called business domains
+│   ├── domains/src/
+|	|	|
+|	|	|	// Each domain contain an index that is meant for client/server exports (needs to work for both client and server)
+|	|	├── domains/(domain)/
+|	|	|	|
+|	|	|	|	// All frontend components that have visual and domain logic
+|	|	|	├── components/
+|	|	|	|
+|	|	|	|	// All backend code that won't be available to the frontend, you can create an index to export the service (don't export any sql/table file)
+|	|	|	├── server/
+|	|	|	|	|
+|	|	|	|	|	// the trpc router unit of that domain
+|	|	|	|	├── router.server.ts
+|	|	|	|	|
+|	|	|	|	|	// the service that contains the business logic for the domain
+|	|	|	|	├── service.server.ts
+|	|	|	|	|
+|	|	|	|	|	// the sql queries that interact with database, later on we can migrate to raw sql to increase performance
+|	|	|	|	├── sql.server.ts
+|	|	|	|	|
+|	|	|	|	|	// the sql table that composes the database structure and relations of the domain
+|	|	|	|	└── table.server.ts
+|	|	|	|
+|	|	|	|	// The validation schema that can be reused for both the backend and the frontend
+|	|	|	└── schema.ts
+|	|	|
+|	|	|	// after creating a router in one of the domains, update this file to make it available in the trpc ecosystem
+|	|	└── server.ts
+|	|
+|	|	// DS stands for design system, this package contains code not directly tied to any business logic
 │   ├── ds/
-|	|	|	// DS stands for design system, this package contains code not directly tied to any business logic
-|	|	├── components/
+|	|	|
 |	|	|	// All visual react components used in the application
-|	|	├── hooks/
+|	|	├── components/
+|	|	|
 |	|	|	// All react hooks used in the application
-|	|	├── icons/
+|	|	├── hooks/
+|	|	|
 |	|	|	// Any custom icon component (that lucide doesn't cover)
-|	|	├── lib/
+|	|	├── icons/
+|	|	|
 |	|	|	// Some generic helper functions
+|	|	├── lib/
+|	|	|
+|	|	|	// The general styling config that setups tailwind and the theme
 │   │   └── style.css
-|	|	 	// The general styling config that setups tailwind and the theme
 |	|	
+│   |   // All email templates to be sent by the backend
 │   └── emails/
-│       └── All email templates to be sent by the backend
 |
-├── public/
 |	// static assets to be served in the applications, such as locales, images, etc
+├── public/
 |
+|	// Scripts are code related to quality assurance and CICD
 └── scripts/src/
-	|	// Scripts are code related to quality assurance and CICD
-	├── coverage
+	|
 	|	// Get the code line coverage result and parse it into a summary
+	├── coverage
+	|
+	|	// Make sure all the localization files contains the same keys
 	└── locale
-		// Make sure all the localization files contains the same keys
-
 ```
