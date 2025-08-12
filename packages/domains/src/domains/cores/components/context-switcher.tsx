@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { BuildingIcon, ChevronsUpDownIcon, PlusIcon } from "lucide-react";
+import { BuildingIcon, ChevronsUpDownIcon } from "lucide-react";
 
 import { useIsMobile } from "@repo/ds/hooks/use-mobile";
 import {
@@ -7,12 +7,12 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@repo/ds/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@repo/ds/ui/sidebar";
 
 import { trpc } from "../..";
+import { queryClient } from "../../app";
 
 export function ContextSwitcher() {
 	const isMobile = useIsMobile();
@@ -20,7 +20,13 @@ export function ContextSwitcher() {
 	const { data: parties } = useQuery(trpc.parties.index.queryOptions());
 	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
 
-	const { mutateAsync: setActiveParty } = useMutation(trpc.parties.current.set.mutationOptions());
+	const { mutateAsync: setActiveParty } = useMutation(
+		trpc.parties.current.set.mutationOptions({
+			onSuccess() {
+				queryClient.invalidateQueries(trpc.parties.current.get.queryFilter());
+			},
+		}),
+	);
 
 	return (
 		<SidebarMenu>
@@ -60,13 +66,6 @@ export function ContextSwitcher() {
 								{party.name}
 							</DropdownMenuItem>
 						))}
-						<DropdownMenuSeparator />
-						<DropdownMenuItem className="gap-2 p-2">
-							<div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-								<PlusIcon className="size-4" />
-							</div>
-							<div className="text-muted-foreground font-medium">Add team</div>
-						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</SidebarMenuItem>

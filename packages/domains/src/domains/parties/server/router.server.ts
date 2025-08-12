@@ -19,7 +19,7 @@ export const partiesRouter = t.router({
 	/**
 	 * Get a specific party
 	 */
-	show: t.protected.input(z.string()).query(({ ctx, input }) => partyService.show(input, ctx.user)),
+	show: t.route.input(z.string()).query(({ input }) => partyService.show(input)),
 
 	/**
 	 * Update a specific party
@@ -40,6 +40,13 @@ export const partiesRouter = t.router({
 		index: t.protected
 			.input(paginationSchema.and(z.object({ party: z.string() })))
 			.query(({ ctx, input }) => partyService.members.index(input.party, input, ctx.user)),
+
+		/**
+		 * Request to join a party
+		 */
+		request: t.protected
+			.input(z.string())
+			.mutation(({ ctx, input }) => partyService.members.request(input, ctx.user)),
 
 		/**
 		 * Add a new party member
@@ -71,13 +78,13 @@ export const partiesRouter = t.router({
 
 			if (!id) return null;
 
-			return partyService.show(id, ctx.user);
+			return partyService.show(id);
 		}),
 
 		set: t.protected.input(z.string()).mutation(({ ctx, input }) => {
 			ctx.cookie.set("partyId", input);
 
-			return partyService.show(input, ctx.user);
+			return partyService.show(input);
 		}),
 	}),
 });

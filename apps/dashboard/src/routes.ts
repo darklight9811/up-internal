@@ -13,6 +13,9 @@ export default [
 		]),
 	]),
 
+	// Invite
+	route("/invite/:slug", "./routes/invite/[slug]/page.tsx"),
+
 	// App
 	layout("./routes/(app)/layout.tsx", [route("/", "./routes/(app)/page.tsx")]),
 

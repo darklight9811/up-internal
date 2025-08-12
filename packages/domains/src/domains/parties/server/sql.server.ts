@@ -4,11 +4,7 @@ import { db } from "../../../utils/db";
 import { bitwise } from "../../../utils/db/columns";
 import type { PaginationSchema } from "../../app";
 import type { UserSystemSchema } from "../../users/schema";
-import {
-	type PartyFormSchema,
-	type PartyMemberFormSchema,
-	permissions,
-} from "../schema";
+import { type PartyFormSchema, type PartyMemberFormSchema, permissions } from "../schema";
 import { parties, partyMembers } from "./table.server";
 
 export const partyMemberSQL = {
@@ -18,12 +14,7 @@ export const partyMemberSQL = {
 			db
 				.select({ id: partyMembers.partyId })
 				.from(partyMembers)
-				.where(
-					and(
-						eq(partyMembers.userId, user.id),
-						bitwise.has(partyMembers.role, permissions.canView),
-					),
-				),
+				.where(and(eq(partyMembers.userId, user.id), bitwise.has(partyMembers.role, permissions.canView))),
 		);
 
 		return Promise.all([
@@ -71,9 +62,7 @@ export const partyMemberSQL = {
 	},
 
 	delete(id: string) {
-		return db
-			.delete(parties)
-			.where(or(eq(parties.id, id), eq(parties.slug, id)));
+		return db.delete(parties).where(or(eq(parties.id, id), eq(parties.slug, id)));
 	},
 
 	members: {
@@ -112,14 +101,12 @@ export const partyMemberSQL = {
 			]);
 		},
 
-		add(
-			party: string,
-			data: PartyMemberFormSchema,
-			user: UserSystemSchema,
-		) {
-			return db
-				.insert(partyMembers)
-				.values({ ...data, userId: user.id, partyId: party });
+		async request(party: string, user: UserSystemSchema) {
+			return db.insert(partyMembers).values({ role: 0, userId: user.id, partyId: party });
+		},
+
+		add(party: string, data: PartyMemberFormSchema, user: UserSystemSchema) {
+			return db.insert(partyMembers).values({ ...data, userId: user.id, partyId: party });
 		},
 
 		update(member: string, data: PartyMemberFormSchema) {

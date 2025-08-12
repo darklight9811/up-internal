@@ -4,6 +4,7 @@ import { users } from "../../users/server/table.server";
 export const parties = c.table("parties", {
 	id: c.id().defaultRandom().primaryKey(),
 
+	logo: c.varchar(),
 	slug: c.text().unique(),
 	name: c.text().notNull(),
 	description: c.text(),

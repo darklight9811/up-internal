@@ -11,9 +11,7 @@ type ConfigValue = {
 };
 
 export function metadata<Loader extends LoaderFunction>(
-	config:
-		| ConfigValue
-		| ((ctx: Parameters<MetaFunction<Loader>>[0]) => ConfigValue),
+	config: ConfigValue | ((ctx: Parameters<MetaFunction<Loader>>[0]) => ConfigValue) = {},
 ): MetaFunction<Loader> {
 	return (ctx) => {
 		const data = typeof config === "function" ? config(ctx) : config;
@@ -136,8 +134,7 @@ export function metadata<Loader extends LoaderFunction>(
 			 */
 			{
 				name: "viewport",
-				content:
-					"width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover",
+				content: "width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover",
 			},
 		];
 	};

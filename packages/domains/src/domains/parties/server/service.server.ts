@@ -12,9 +12,7 @@ export const partyService = {
 		return partyMemberSQL.store(data, user);
 	},
 
-	async show(id: string, user: UserSystemSchema) {
-		await partyMemberSQL.members.can(id, user.id, permissions.canView);
-
+	async show(id: string) {
 		return partyMemberSQL.show(id);
 	},
 
@@ -35,6 +33,10 @@ export const partyService = {
 			await partyMemberSQL.members.can(party, user.id, permissions.canView);
 
 			return partyMemberSQL.members.index(party, pagination);
+		},
+
+		async request(party: string, user: UserSystemSchema) {
+			return partyMemberSQL.members.request(party, user);
 		},
 
 		async add(party: string, data: PartyMemberFormSchema, user: UserSystemSchema) {
