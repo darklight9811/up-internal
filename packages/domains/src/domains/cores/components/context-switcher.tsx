@@ -1,5 +1,7 @@
-import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { BuildingIcon, ChevronsUpDownIcon, PlusIcon } from "lucide-react";
 
+import { useIsMobile } from "@repo/ds/hooks/use-mobile";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -10,10 +12,15 @@ import {
 } from "@repo/ds/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@repo/ds/ui/sidebar";
 
-import { useIsMobile } from "../../../../../ds/src/hooks/use-mobile";
+import { trpc } from "../..";
 
 export function ContextSwitcher() {
 	const isMobile = useIsMobile();
+
+	const { data: parties } = useQuery(trpc.parties.index.queryOptions());
+	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
+
+	const { mutateAsync: setActiveParty } = useMutation(trpc.parties.current.set.mutationOptions());
 
 	return (
 		<SidebarMenu>
@@ -25,11 +32,11 @@ export function ContextSwitcher() {
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-								<img className="size-4" />
+								<BuildingIcon className="size-4" />
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-medium">yay</span>
-								<span className="truncate text-xs">what</span>
+								<span className="truncate font-medium">{current?.name}</span>
+								<span className="truncate text-xs">{current?.description}</span>
 							</div>
 							<ChevronsUpDownIcon className="ml-auto" />
 						</SidebarMenuButton>
@@ -41,15 +48,18 @@ export function ContextSwitcher() {
 						sideOffset={4}
 					>
 						<DropdownMenuLabel className="text-muted-foreground text-xs">Teams</DropdownMenuLabel>
-						{/* {teams.map((team, index) => (
-							<DropdownMenuItem key={team.name} onClick={() => setActiveTeam(team)} className="gap-2 p-2">
+						{parties?.[0].map((party) => (
+							<DropdownMenuItem
+								key={party.slug}
+								onClick={() => setActiveParty(party.id)}
+								className="gap-2 p-2"
+							>
 								<div className="flex size-6 items-center justify-center rounded-md border">
-									<team.logo className="size-3.5 shrink-0" />
+									<BuildingIcon className="size-3.5 shrink-0" />
 								</div>
-								{team.name}
-								<DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+								{party.name}
 							</DropdownMenuItem>
-						))} */}
+						))}
 						<DropdownMenuSeparator />
 						<DropdownMenuItem className="gap-2 p-2">
 							<div className="flex size-6 items-center justify-center rounded-md border bg-transparent">

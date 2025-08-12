@@ -5,7 +5,7 @@ import { paginationSchema } from "../../app";
 import { partyFormSchema, partyMemberFormSchema } from "../schema";
 import { partyService } from "./service.server";
 
-export const partyRouter = t.router({
+export const partiesRouter = t.router({
 	/**
 	 * Get a list of parties
 	 */
@@ -63,5 +63,21 @@ export const partyRouter = t.router({
 		remove: t.protected
 			.input(z.object({ partyId: z.string(), memberId: z.string() }))
 			.mutation(({ ctx, input }) => partyService.members.remove(input.partyId, input.memberId, ctx.user)),
+	}),
+
+	current: t.router({
+		get: t.protected.query(({ ctx }) => {
+			const id = ctx.cookie.get("partyId");
+
+			if (!id) return null;
+
+			return partyService.show(id, ctx.user);
+		}),
+
+		set: t.protected.input(z.string()).mutation(({ ctx, input }) => {
+			ctx.cookie.set("partyId", input);
+
+			return partyService.show(input, ctx.user);
+		}),
 	}),
 });
