@@ -38,18 +38,18 @@ The codebase is a monorepo, meant to clearly separate concerns and code for reus
 
 ```
 workerparty/
-├── apps
+├── apps/
 |	|	// any application that will be deployed to the final user
-|	├── dashboard
+|	├── dashboard/
 ├── packages/
-│   ├── domains/src
+│   ├── domains/src/
 |	|	|	// Domains are features in their indisible concern, also called business domains
-|	|	├── domains/(domain)
+|	|	├── domains/(domain)/
 |	|	|	// Each domain contain an index that is meant for client/server exports (needs to work for both client and server)
-|	|	|	├── components
+|	|	|	├── components/
 |	|	|	|	// All frontend components that have visual and domain logic
 |	|	|	|
-|	|	|	├── server
+|	|	|	├── server/
 |	|	|	|	// All backend code that won't be available to the frontend, you can create an index to export the service (don't export any sql/table file)
 |	|	|	|	├── router.server.ts
 |	|	|	|	|	// the trpc router unit of that domain
@@ -67,17 +67,28 @@ workerparty/
 |	|
 │   ├── ds/
 |	|	|	// DS stands for design system, this package contains code not directly tied to any business logic
-|	|	├── components
+|	|	├── components/
 |	|	|	// All visual react components used in the application
-|	|	├── hooks
+|	|	├── hooks/
 |	|	|	// All react hooks used in the application
-|	|	├── icons
+|	|	├── icons/
 |	|	|	// Any custom icon component (that lucide doesn't cover)
-|	|	├── lib
+|	|	├── lib/
 |	|	|	// Some generic helper functions
 │   │   └── style.css
 |	|	 	// The general styling config that setups tailwind and the theme
 |	|	
 │   └── emails/
 │       └── All email templates to be sent by the backend
+|
+├── public/
+|	// static assets to be served in the applications, such as locales, images, etc
+|
+└── scripts/src/
+	|	// Scripts are code related to quality assurance and CICD
+	├── coverage
+	|	// Get the code line coverage result and parse it into a summary
+	└── locale
+		// Make sure all the localization files contains the same keys
+
 ```
