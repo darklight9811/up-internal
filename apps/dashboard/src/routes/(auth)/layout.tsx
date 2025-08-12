@@ -7,7 +7,7 @@ import { serverLoader } from "src/utils/server-loader";
 export const loader = serverLoader(async ({ cookies, pathname }) => {
 	const user = await authService.session(cookies.get("token"));
 
-	if (user && !user.isAnonymous && ["/register", "/login"].includes(pathname)) return redirect("/");
+	if (user && ["/register", "/login"].includes(pathname)) return redirect("/");
 });
 
 export default function AuthLayout() {

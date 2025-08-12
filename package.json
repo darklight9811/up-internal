@@ -32,7 +32,7 @@
 		],
 		"catalog": {
 			"react": "^19.1.1",
-			"@types/react": "^19.1.9",
+			"@types/react": "^19.1.10",
 			"typescript": "latest",
 			"lucide-react": "latest",
 			"tailwindcss": "^4.1.11",

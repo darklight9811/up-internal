@@ -1,9 +1,4 @@
-import {
-	layout,
-	prefix,
-	type RouteConfig,
-	route,
-} from "@react-router/dev/routes";
+import { layout, prefix, type RouteConfig, route } from "@react-router/dev/routes";
 
 export default [
 	// auth
@@ -17,6 +12,9 @@ export default [
 			route("/reset", "./routes/(auth)/password/reset/page.tsx"),
 		]),
 	]),
+
+	// App
+	layout("./routes/(app)/layout.tsx", [route("/", "./routes/(app)/page.tsx")]),
 
 	// General
 	route("/manifest.webmanifest", "./routes/manifest.ts"),
