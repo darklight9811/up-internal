@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { trpc } from "@repo/domains";
+import { useSession } from "@repo/domains/auth";
 
 export default function HomePage() {
+	const user = useSession();
 	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
 
 	if (!current) {
@@ -14,5 +16,10 @@ export default function HomePage() {
 		);
 	}
 
-	return "hi";
+	return (
+		<div className="p-4">
+			<h1 className="text-3xl font-bold">{current?.name}</h1>
+			<h2>Bem-vindo de volta, {user?.name}</h2>
+		</div>
+	);
 }
