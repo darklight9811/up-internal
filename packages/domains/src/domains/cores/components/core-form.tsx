@@ -16,7 +16,7 @@ export function CoreForm({ children, onSubmit, data }: CoreFormProps) {
 			name: data?.name || "",
 			partyId: data?.partyId || "",
 			description: data?.description || ("" as string | null),
-			location: [0, 0] as [number, number],
+			location: [0, 0] as [number, number] | null,
 		},
 		validators: {
 			onSubmit: coreFormSchema,

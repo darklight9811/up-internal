@@ -88,7 +88,7 @@ export const partiesRouter = t.router({
 
 			return {
 				...party,
-				cores: core ? [{ ...core, selected: true }, ...cores[0].filter((c) => c.id === coreId)] : cores[0],
+				cores: core ? [{ ...core, selected: true }, ...cores[0].filter((c) => c.id !== coreId)] : cores[0],
 			};
 		}),
 

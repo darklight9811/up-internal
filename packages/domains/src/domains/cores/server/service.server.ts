@@ -18,8 +18,6 @@ export const coresService = {
 	},
 
 	async update(id: string, data: CoreFormSchema, user: UserSystemSchema) {
-		await coresSQL.members.can(id, user.id, permissions.canManage);
-
 		return coresSQL.update(id, data);
 	},
 

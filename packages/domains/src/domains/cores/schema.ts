@@ -12,7 +12,7 @@ export type CoreMemberFormSchema = z.infer<typeof coreMemberFormSchema>;
 export const coreFormSchema = z.object({
 	name: z.string().min(2).max(100),
 	description: z.string().max(500).nullable(),
-	location: z.tuple([z.number(), z.number()]),
+	location: z.tuple([z.number(), z.number()]).nullable(),
 	partyId: z.cuid2(),
 });
 

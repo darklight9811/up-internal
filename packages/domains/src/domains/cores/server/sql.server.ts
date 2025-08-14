@@ -58,7 +58,7 @@ export const coresSQL = {
 	},
 
 	show(id: string) {
-		return db.query.parties.findFirst({
+		return db.query.cores.findFirst({
 			where: eq(cores.id, id),
 		});
 	},
