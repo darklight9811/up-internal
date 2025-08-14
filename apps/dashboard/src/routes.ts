@@ -20,6 +20,7 @@ export default [
 	layout("./routes/(app)/layout.tsx", [
 		route("/", "./routes/(app)/page.tsx"),
 		route("/cores", "./routes/(app)/cores/page.tsx"),
+		route("/cores/add", "./routes/(app)/cores/add/page.tsx"),
 	]),
 
 	// General

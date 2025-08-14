@@ -3,11 +3,7 @@
 		"target": "ES2022",
 		"module": "ESNext",
 		"lib": ["DOM", "DOM.Iterable", "ES2022"],
-		"types": [
-			"@react-router/node",
-			"vite/client",
-			"@types/bun"
-		],
+		"types": ["@react-router/node", "vite/client", "@types/bun"],
 		"skipLibCheck": true,
 		/* Bundler mode */
 		"moduleResolution": "bundler",

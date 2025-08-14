@@ -22,6 +22,7 @@ import { Toaster } from "@repo/ds/ui/sonner";
 
 import { authService } from "@repo/domains/auth/server";
 
+import { partiesService } from "../../../packages/domains/src/domains/parties/server/service.server";
 import i18next, { i18nextMiddleware } from "./utils/i19next.server";
 import { serverLoader } from "./utils/server-loader";
 
@@ -53,9 +54,15 @@ export const unstable_middleware = [i18nextMiddleware];
  * ### MARK: Loader
  */
 export const loader = serverLoader(async ({ request, cookies }) => {
-	const [locale, user] = await Promise.all([i18next.getLocale(request), authService.session(cookies.get("token"))]);
+	const partyId = cookies.get("partyId");
 
-	return { locale, user };
+	const [locale, user, party] = await Promise.all([
+		i18next.getLocale(request),
+		authService.session(cookies.get("token")),
+		partyId && partiesService.show(partyId),
+	]);
+
+	return { locale, user, party };
 });
 
 export const handle = {

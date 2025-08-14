@@ -7,14 +7,15 @@ import { Pagination } from "@repo/ds/ui/pagination";
 import { Table, TableHead, TableHeader, TableRow } from "@repo/ds/ui/table";
 
 import { trpc } from "@repo/domains";
-import { paginationSchema } from "@repo/domains/app";
+import { metadata, paginationSchema } from "@repo/domains/app";
+import { useCurrentParty } from "@repo/domains/parties";
+
+export const meta = metadata({ title: "Núcleos" });
 
 export default function CoresListPage() {
 	const [pagination] = useSearch(paginationSchema);
-	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
+	const current = useCurrentParty();
 	const { data: list } = useQuery(trpc.cores.index.queryOptions({ ...pagination, partyId: current?.id }));
-
-	console.log(list);
 
 	return (
 		<main className="p-4 pt-0 w-full grow">

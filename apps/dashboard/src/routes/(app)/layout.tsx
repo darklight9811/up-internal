@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { Building2Icon, CogIcon, HouseIcon } from "lucide-react";
 import { Link, Outlet, redirect } from "react-router";
 
@@ -16,10 +15,9 @@ import {
 	SidebarTrigger,
 } from "@repo/ds/ui/sidebar";
 
-import { trpc } from "@repo/domains";
-import { metadata } from "@repo/domains/app";
 import { authService } from "@repo/domains/auth/server";
 import { ContextSwitcher } from "@repo/domains/cores";
+import { useCurrentParty } from "@repo/domains/parties";
 
 import { serverLoader } from "src/utils/server-loader";
 
@@ -29,10 +27,8 @@ export const loader = serverLoader(async ({ cookies }) => {
 	if (!user) return redirect("/login");
 });
 
-export const meta = metadata({});
-
 export default function AppLayout() {
-	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
+	const current = useCurrentParty();
 
 	return (
 		<div>

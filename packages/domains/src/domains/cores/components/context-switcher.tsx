@@ -14,12 +14,13 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@repo/ds/ui/sid
 
 import { trpc } from "../..";
 import { queryClient } from "../../app";
+import { useCurrentParty } from "../../parties";
 
 export function ContextSwitcher() {
 	const isMobile = useIsMobile();
 
 	const { data: parties } = useQuery(trpc.parties.index.queryOptions());
-	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
+	const current = useCurrentParty();
 
 	const { mutateAsync: setActiveParty } = useMutation(
 		trpc.parties.current.set.mutationOptions({
@@ -87,9 +88,9 @@ export function ContextSwitcher() {
 							<>
 								<DropdownMenuLabel className="text-muted-foreground text-xs w-full flex justify-between">
 									Núcleos
-									{current.cores.length !== 0 && <Link to="/cores">Ver todos</Link>}
+									{current.cores?.length !== 0 && <Link to="/cores">Ver todos</Link>}
 								</DropdownMenuLabel>
-								{current.cores.map((core) => (
+								{current.cores?.map((core) => (
 									<DropdownMenuItem
 										key={core.id}
 										onClick={(e) => {
@@ -104,7 +105,7 @@ export function ContextSwitcher() {
 										{core.name}
 									</DropdownMenuItem>
 								))}
-								{current.cores.length === 0 && (
+								{current.cores?.length === 0 && (
 									<DropdownMenuItem disabled className="cursor-default">
 										Não há núcleos disponíveis
 									</DropdownMenuItem>

@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { trpc } from "@repo/domains";
+import { metadata } from "@repo/domains/app";
 import { useSession } from "@repo/domains/auth";
+
+export const meta = metadata({});
 
 export default function HomePage() {
 	const user = useSession();
