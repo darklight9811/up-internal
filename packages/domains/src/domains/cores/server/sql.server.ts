@@ -44,13 +44,17 @@ export const coresSQL = {
 	},
 
 	store(payload: CoreFormSchema, user: UserSystemSchema) {
-		return db.insert(cores).values({
-			name: payload.name,
-			description: payload.description,
-			partyId: payload.partyId,
-			location: payload.location,
-			userCreatedId: user.id,
-		});
+		return db
+			.insert(cores)
+			.values({
+				name: payload.name,
+				description: payload.description,
+				partyId: payload.partyId,
+				location: payload.location,
+				userCreatedId: user.id,
+			})
+			.returning()
+			.then((response) => response[0]);
 	},
 
 	show(id: string) {

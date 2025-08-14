@@ -10,9 +10,8 @@ export const coreMemberFormSchema = z.object({
 export type CoreMemberFormSchema = z.infer<typeof coreMemberFormSchema>;
 
 export const coreFormSchema = z.object({
-	slug: z.string().min(2).max(100),
 	name: z.string().min(2).max(100),
-	description: z.string().max(500).optional(),
+	description: z.string().max(500).nullable(),
 	location: z.tuple([z.number(), z.number()]),
 	partyId: z.cuid2(),
 });
