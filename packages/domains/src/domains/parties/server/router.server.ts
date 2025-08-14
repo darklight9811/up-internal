@@ -2,36 +2,37 @@ import { z } from "zod/v4";
 
 import { t } from "../../../utils/trpc";
 import { paginationSchema } from "../../app";
+import { coresService } from "../../cores/server/service.server";
 import { partyFormSchema, partyMemberFormSchema } from "../schema";
-import { partyService } from "./service.server";
+import { partiesService } from "./service.server";
 
 export const partiesRouter = t.router({
 	/**
 	 * Get a list of parties
 	 */
-	index: t.protected.input(paginationSchema).query(({ ctx, input }) => partyService.index(input, ctx.user)),
+	index: t.protected.input(paginationSchema).query(({ ctx, input }) => partiesService.index(input, ctx.user)),
 
 	/**
 	 * Create a new party
 	 */
-	store: t.protected.input(partyFormSchema).mutation(({ ctx, input }) => partyService.store(input, ctx.user)),
+	store: t.protected.input(partyFormSchema).mutation(({ ctx, input }) => partiesService.store(input, ctx.user)),
 
 	/**
 	 * Get a specific party
 	 */
-	show: t.route.input(z.string()).query(({ input }) => partyService.show(input)),
+	show: t.route.input(z.string()).query(({ input }) => partiesService.show(input)),
 
 	/**
 	 * Update a specific party
 	 */
 	update: t.protected
 		.input(z.object({ id: z.string(), data: partyFormSchema }))
-		.mutation(({ ctx, input }) => partyService.update(input.id, input.data, ctx.user)),
+		.mutation(({ ctx, input }) => partiesService.update(input.id, input.data, ctx.user)),
 
 	/**
 	 * Delete a specific party
 	 */
-	delete: t.protected.input(z.string()).mutation(({ ctx, input }) => partyService.delete(input, ctx.user)),
+	delete: t.protected.input(z.string()).mutation(({ ctx, input }) => partiesService.delete(input, ctx.user)),
 
 	members: t.router({
 		/**
@@ -39,21 +40,21 @@ export const partiesRouter = t.router({
 		 */
 		index: t.protected
 			.input(paginationSchema.and(z.object({ party: z.string() })))
-			.query(({ ctx, input }) => partyService.members.index(input.party, input, ctx.user)),
+			.query(({ ctx, input }) => partiesService.members.index(input.party, input, ctx.user)),
 
 		/**
 		 * Request to join a party
 		 */
 		request: t.protected
 			.input(z.string())
-			.mutation(({ ctx, input }) => partyService.members.request(input, ctx.user)),
+			.mutation(({ ctx, input }) => partiesService.members.request(input, ctx.user)),
 
 		/**
 		 * Add a new party member
 		 */
 		add: t.protected
 			.input(partyMemberFormSchema)
-			.mutation(({ ctx, input }) => partyService.members.add(input.partyId, input, ctx.user)),
+			.mutation(({ ctx, input }) => partiesService.members.add(input.partyId, input, ctx.user)),
 
 		/**
 		 * Update a party member
@@ -61,7 +62,7 @@ export const partiesRouter = t.router({
 		update: t.protected
 			.input(partyMemberFormSchema.and(z.object({ id: z.string(), data: partyMemberFormSchema })))
 			.mutation(({ ctx, input }) =>
-				partyService.members.update(input.data.partyId, input.id, input.data, ctx.user),
+				partiesService.members.update(input.data.partyId, input.id, input.data, ctx.user),
 			),
 
 		/**
@@ -69,22 +70,33 @@ export const partiesRouter = t.router({
 		 */
 		remove: t.protected
 			.input(z.object({ partyId: z.string(), memberId: z.string() }))
-			.mutation(({ ctx, input }) => partyService.members.remove(input.partyId, input.memberId, ctx.user)),
+			.mutation(({ ctx, input }) => partiesService.members.remove(input.partyId, input.memberId, ctx.user)),
 	}),
 
 	current: t.router({
-		get: t.protected.query(({ ctx }) => {
-			const id = ctx.cookie.get("partyId");
+		get: t.protected.query(async ({ ctx }) => {
+			const partyId = ctx.cookie.get("partyId");
+			const coreId = ctx.cookie.get("coreId");
 
-			if (!id) return null;
+			if (!partyId) return null;
 
-			return partyService.show(id);
+			const [party, cores, core] = await Promise.all([
+				partiesService.show(partyId),
+				coresService.index(partyId, { limit: 5, page: 1, sort: "asc" }, ctx.user),
+				coreId ? coresService.show(coreId) : null,
+			]);
+
+			return {
+				...party,
+				cores: core ? [{ ...core, selected: true }, ...cores[0].filter((c) => c.id === coreId)] : cores[0],
+			};
 		}),
 
 		set: t.protected.input(z.string()).mutation(({ ctx, input }) => {
 			ctx.cookie.set("partyId", input);
+			ctx.cookie.remove("coreId");
 
-			return partyService.show(input);
+			return partiesService.show(input);
 		}),
 	}),
 });

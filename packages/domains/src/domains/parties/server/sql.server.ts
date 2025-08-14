@@ -7,7 +7,7 @@ import type { UserSystemSchema } from "../../users/schema";
 import { type PartyFormSchema, type PartyMemberFormSchema, permissions } from "../schema";
 import { parties, partyMembers } from "./table.server";
 
-export const partyMemberSQL = {
+export const partiesSQL = {
 	index(pagination: PaginationSchema, user: UserSystemSchema) {
 		const whereClause = inArray(
 			parties.id,

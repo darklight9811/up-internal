@@ -27,6 +27,16 @@ export function ContextSwitcher() {
 			},
 		}),
 	);
+	const { mutateAsync: setActiveCore } = useMutation(
+		trpc.cores.current.set.mutationOptions({
+			onSuccess() {
+				Promise.all([
+					queryClient.invalidateQueries(trpc.parties.current.get.queryFilter()),
+					queryClient.invalidateQueries(trpc.cores.current.get.queryFilter()),
+				]);
+			},
+		}),
+	);
 
 	return (
 		<SidebarMenu>
@@ -42,7 +52,9 @@ export function ContextSwitcher() {
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{current?.name}</span>
-								<span className="truncate text-xs">{current?.description}</span>
+								{(current?.cores as { selected?: boolean }[]).at(0)?.selected && (
+									<span className="truncate text-xs">{current?.cores.at(0)?.name}</span>
+								)}
 							</div>
 							<ChevronsUpDownIcon className="ml-auto" />
 						</SidebarMenuButton>
@@ -53,17 +65,37 @@ export function ContextSwitcher() {
 						side={isMobile ? "bottom" : "right"}
 						sideOffset={4}
 					>
-						<DropdownMenuLabel className="text-muted-foreground text-xs">Teams</DropdownMenuLabel>
+						<DropdownMenuLabel className="text-muted-foreground text-xs">Partidos</DropdownMenuLabel>
 						{parties?.[0].map((party) => (
-							<DropdownMenuItem
+							<button
+								type="button"
 								key={party.slug}
-								onClick={() => setActiveParty(party.id)}
-								className="gap-2 p-2"
+								onClick={(e) => {
+									e.stopPropagation();
+									setActiveParty(party.id);
+								}}
+								className="flex items-center px-2 py-1.5 text-sm relative text-start gap-2 p-2 hover:cursor-pointer"
 							>
 								<div className="flex size-6 items-center justify-center rounded-md border">
 									<BuildingIcon className="size-3.5 shrink-0" />
 								</div>
 								{party.name}
+							</button>
+						))}
+						<DropdownMenuLabel className="text-muted-foreground text-xs">Núcleos</DropdownMenuLabel>
+						{current?.cores?.map((core) => (
+							<DropdownMenuItem
+								key={core.id}
+								onClick={(e) => {
+									e.stopPropagation();
+									setActiveCore(core.id);
+								}}
+								className="gap-2 p-2 hover:cursor-pointer"
+							>
+								<div className="flex size-6 items-center justify-center rounded-md border">
+									<BuildingIcon className="size-3.5 shrink-0" />
+								</div>
+								{core.name}
 							</DropdownMenuItem>
 						))}
 					</DropdownMenuContent>
