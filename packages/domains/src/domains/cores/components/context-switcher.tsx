@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BuildingIcon, ChevronsUpDownIcon } from "lucide-react";
+import { Link } from "react-router";
 
 import { useIsMobile } from "@repo/ds/hooks/use-mobile";
 import {
@@ -52,7 +53,7 @@ export function ContextSwitcher() {
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{current?.name}</span>
-								{(current?.cores as { selected?: boolean }[]).at(0)?.selected && (
+								{(current?.cores as { selected?: boolean }[])?.at(0)?.selected && (
 									<span className="truncate text-xs">{current?.cores.at(0)?.name}</span>
 								)}
 							</div>
@@ -65,7 +66,10 @@ export function ContextSwitcher() {
 						side={isMobile ? "bottom" : "right"}
 						sideOffset={4}
 					>
-						<DropdownMenuLabel className="text-muted-foreground text-xs">Partidos</DropdownMenuLabel>
+						<DropdownMenuLabel className="text-muted-foreground text-xs w-full flex justify-between">
+							Partidos
+							<Link to="/parties">Ver todos</Link>
+						</DropdownMenuLabel>
 						{parties?.[0].map((party) => (
 							<button
 								type="button"
@@ -82,22 +86,34 @@ export function ContextSwitcher() {
 								{party.name}
 							</button>
 						))}
-						<DropdownMenuLabel className="text-muted-foreground text-xs">Núcleos</DropdownMenuLabel>
-						{current?.cores?.map((core) => (
-							<DropdownMenuItem
-								key={core.id}
-								onClick={(e) => {
-									e.stopPropagation();
-									setActiveCore(core.id);
-								}}
-								className="gap-2 p-2 hover:cursor-pointer"
-							>
-								<div className="flex size-6 items-center justify-center rounded-md border">
-									<BuildingIcon className="size-3.5 shrink-0" />
-								</div>
-								{core.name}
-							</DropdownMenuItem>
-						))}
+						{current && (
+							<>
+								<DropdownMenuLabel className="text-muted-foreground text-xs w-full flex justify-between">
+									Núcleos
+									{current.cores.length !== 0 && <Link to="/cores">Ver todos</Link>}
+								</DropdownMenuLabel>
+								{current.cores.map((core) => (
+									<DropdownMenuItem
+										key={core.id}
+										onClick={(e) => {
+											e.stopPropagation();
+											setActiveCore(core.id);
+										}}
+										className="gap-2 p-2 hover:cursor-pointer"
+									>
+										<div className="flex size-6 items-center justify-center rounded-md border">
+											<BuildingIcon className="size-3.5 shrink-0" />
+										</div>
+										{core.name}
+									</DropdownMenuItem>
+								))}
+								{current.cores.length === 0 && (
+									<DropdownMenuItem disabled className="cursor-default">
+										Não há núcleos disponíveis
+									</DropdownMenuItem>
+								)}
+							</>
+						)}
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</SidebarMenuItem>
