@@ -1,4 +1,5 @@
-import { CogIcon, HouseIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Building2Icon, CogIcon, HouseIcon } from "lucide-react";
 import { Link, Outlet, redirect } from "react-router";
 
 import {
@@ -15,6 +16,7 @@ import {
 	SidebarTrigger,
 } from "@repo/ds/ui/sidebar";
 
+import { trpc } from "@repo/domains";
 import { metadata } from "@repo/domains/app";
 import { authService } from "@repo/domains/auth/server";
 import { ContextSwitcher } from "@repo/domains/cores";
@@ -30,6 +32,8 @@ export const loader = serverLoader(async ({ cookies }) => {
 export const meta = metadata({});
 
 export default function AppLayout() {
+	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
+
 	return (
 		<div>
 			<SidebarProvider>
@@ -39,37 +43,49 @@ export default function AppLayout() {
 					</SidebarHeader>
 
 					<SidebarContent>
-						<SidebarGroup>
-							<SidebarGroupLabel>Partido</SidebarGroupLabel>
+						{current && (
+							<SidebarGroup>
+								<SidebarGroupLabel>Partido</SidebarGroupLabel>
 
-							<SidebarGroupContent>
-								<SidebarMenu>
-									<SidebarMenuItem className="group/collapsible">
-										<SidebarMenuButton asChild>
-											<Link to="/">
-												<HouseIcon /> Home
-											</Link>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
+								<SidebarGroupContent>
+									<SidebarMenu>
+										<SidebarMenuItem className="group/collapsible">
+											<SidebarMenuButton asChild>
+												<Link to="/">
+													<HouseIcon /> Home
+												</Link>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
 
-									<SidebarMenuItem className="group/collapsible">
-										<SidebarMenuButton asChild>
-											<Link to="/settings">
-												<CogIcon /> Configurações
-											</Link>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								</SidebarMenu>
-							</SidebarGroupContent>
-						</SidebarGroup>
+										<SidebarMenuItem className="group/collapsible">
+											<SidebarMenuButton asChild>
+												<Link to="/cores">
+													<Building2Icon /> Núcleos
+												</Link>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
+
+										<SidebarMenuItem className="group/collapsible">
+											<SidebarMenuButton asChild>
+												<Link to="/settings">
+													<CogIcon /> Configurações
+												</Link>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
+									</SidebarMenu>
+								</SidebarGroupContent>
+							</SidebarGroup>
+						)}
 					</SidebarContent>
 				</Sidebar>
 
-				<nav>
-					<SidebarTrigger>hi</SidebarTrigger>
-				</nav>
+				<div className="flex flex-col w-full grow">
+					<nav className="p-3 w-full">
+						<SidebarTrigger />
+					</nav>
 
-				<Outlet />
+					<Outlet />
+				</div>
 			</SidebarProvider>
 		</div>
 	);

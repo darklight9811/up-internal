@@ -17,7 +17,10 @@ export default [
 	route("/invite/:slug", "./routes/invite/[slug]/page.tsx"),
 
 	// App
-	layout("./routes/(app)/layout.tsx", [route("/", "./routes/(app)/page.tsx")]),
+	layout("./routes/(app)/layout.tsx", [
+		route("/", "./routes/(app)/page.tsx"),
+		route("/cores", "./routes/(app)/cores/page.tsx"),
+	]),
 
 	// General
 	route("/manifest.webmanifest", "./routes/manifest.ts"),

@@ -17,7 +17,7 @@ export default function HomePage() {
 	}
 
 	return (
-		<div className="p-4">
+		<div className="p-4 pt-0">
 			<h1 className="text-3xl font-bold">{current?.name}</h1>
 			<h2>Bem-vindo de volta, {user?.name}</h2>
 		</div>
