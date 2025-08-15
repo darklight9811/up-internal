@@ -18,34 +18,36 @@ export const coresService = {
 	},
 
 	async update(id: string, data: CoreFormSchema, user: UserSystemSchema) {
+		await coresSQL.members.can(id, permissions.canManage, user);
+
 		return coresSQL.update(id, data);
 	},
 
 	async delete(id: string, user: UserSystemSchema) {
-		await coresSQL.members.can(id, user.id, permissions.canDelete);
+		await coresSQL.members.can(id, permissions.canDelete, user);
 
 		return coresSQL.delete(id);
 	},
 
 	members: {
-		async index(party: string, pagination: PaginationSchema, user: UserSystemSchema) {
-			await coresSQL.members.can(party, user.id, permissions.canView);
+		async index(core: string, pagination: PaginationSchema, user: UserSystemSchema) {
+			await coresSQL.members.can(core, permissions.canView, user);
 
-			return coresSQL.members.index(party, pagination);
+			return coresSQL.members.index(core, pagination);
 		},
 
-		async request(party: string, user: UserSystemSchema) {
-			return coresSQL.members.request(party, user);
+		async request(core: string, user: UserSystemSchema) {
+			return coresSQL.members.request(core, user);
 		},
 
-		async add(party: string, data: CoreMemberFormSchema, user: UserSystemSchema) {
-			await coresSQL.members.can(party, user.id, permissions.canManage);
+		async add(core: string, data: CoreMemberFormSchema, user: UserSystemSchema) {
+			await coresSQL.members.can(core, permissions.canManage, user);
 
-			return coresSQL.members.add(party, data, user);
+			return coresSQL.members.add(core, data, user);
 		},
 
-		async remove(party: string, member: string, user: UserSystemSchema) {
-			await coresSQL.members.can(party, user.id, permissions.canManage);
+		async remove(core: string, member: string, user: UserSystemSchema) {
+			await coresSQL.members.can(core, permissions.canManage, user);
 
 			return coresSQL.members.remove(member);
 		},

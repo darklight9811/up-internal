@@ -4,7 +4,7 @@ import { db } from "../../../utils/db";
 import { bitwise } from "../../../utils/db/columns";
 import type { PaginationSchema } from "../../app";
 import { permissions } from "../../parties/schema";
-import { parties, partyMembers } from "../../parties/server/table.server";
+import { partyMembers } from "../../parties/server/table.server";
 import type { UserSystemSchema } from "../../users/schema";
 import type { CoreFormSchema, CoreMemberFormSchema } from "../schema";
 import { coreMembers, cores } from "./table.server";
@@ -72,14 +72,17 @@ export const coresSQL = {
 	},
 
 	members: {
-		can(party: string, user: string, permission: number) {
+		can(core: string, permission: number, user: string | UserSystemSchema) {
 			return db
-				.select({ id: coreMembers.id })
-				.from(parties)
+				.select({ id: partyMembers.id })
+				.from(partyMembers)
 				.where(
 					and(
-						eq(coreMembers.coreId, party),
-						eq(coreMembers.userId, user),
+						eq(
+							partyMembers.partyId,
+							db.select({ partyId: cores.partyId }).from(cores).where(eq(cores.id, core)),
+						),
+						eq(partyMembers.userId, typeof user === "object" ? user.id : user),
 						bitwise.has(partyMembers.role, permission),
 					),
 				);
@@ -107,12 +110,12 @@ export const coresSQL = {
 			]);
 		},
 
-		async request(party: string, user: UserSystemSchema) {
-			return db.insert(coreMembers).values({ userId: user.id, partyId: party });
+		async request(core: string, user: UserSystemSchema) {
+			return db.insert(coreMembers).values({ userId: user.id, coreId: core });
 		},
 
-		add(party: string, data: CoreMemberFormSchema, user: UserSystemSchema) {
-			return db.insert(coreMembers).values({ ...data, userId: user.id, partyId: party });
+		add(core: string, data: CoreMemberFormSchema, user: UserSystemSchema) {
+			return db.insert(coreMembers).values({ ...data, userId: user.id, coreId: core });
 		},
 
 		remove(member: string) {

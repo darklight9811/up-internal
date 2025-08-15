@@ -1,14 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-
-import { trpc } from "@repo/domains";
 import { metadata } from "@repo/domains/app";
 import { useSession } from "@repo/domains/auth";
+import { useCurrentParty } from "@repo/domains/parties";
 
 export const meta = metadata({});
 
 export default function HomePage() {
 	const user = useSession();
-	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
+	const current = useCurrentParty();
 
 	if (!current) {
 		return (

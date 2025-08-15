@@ -55,10 +55,16 @@ export const unstable_middleware = [i18nextMiddleware];
  */
 export const loader = serverLoader(async ({ request, cookies }) => {
 	const partyId = cookies.get("partyId");
+	const coreId = cookies.get("coreId");
 
 	const [locale, user] = await Promise.all([i18next.getLocale(request), authService.session(cookies.get("token"))]);
+	const party = partyId
+		? await partiesService
+				.show(partyId, user || undefined)
+				.then((r) => (r ? { ...r, cores: r.cores.map((c) => ({ ...c, selected: c.id === coreId })) } : null))
+		: null;
 
-	return { locale, user, party: partyId ? await partiesService.show(partyId, user || undefined) : null };
+	return { locale, user, party };
 });
 
 export const handle = {
