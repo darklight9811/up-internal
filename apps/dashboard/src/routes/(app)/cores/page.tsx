@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { EditIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
+import { toast } from "sonner";
 
 import { useSearch } from "@repo/ds/hooks/use-search";
 import { Button, buttonVariants } from "@repo/ds/ui/button";
@@ -23,6 +24,7 @@ export default function CoresListPage() {
 	const { mutateAsync: deleteCore } = useMutation(
 		trpc.cores.delete.mutationOptions({
 			onSuccess() {
+				toast.success("Núcleo excluído com sucesso!");
 				queryClient.invalidateQueries(trpc.cores.index.queryFilter({ ...pagination, partyId: current?.id }));
 				setCoreToDelete(null);
 			},
@@ -86,6 +88,7 @@ export default function CoresListPage() {
 
 			<DeleteDialog
 				open={!!coreToDelete}
+				onOpenChange={() => setCoreToDelete(null)}
 				onDelete={() => {
 					deleteCore(coreToDelete!);
 				}}

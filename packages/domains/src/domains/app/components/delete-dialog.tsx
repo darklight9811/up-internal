@@ -12,6 +12,7 @@ import {
 
 export interface DeleteDialogProps {
 	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
 	onDelete?: () => void;
 }
 
@@ -21,7 +22,7 @@ export function DeleteDialog(props: DeleteDialogProps) {
 	});
 
 	return (
-		<Dialog open={props.open}>
+		<Dialog open={props.open} onOpenChange={props.onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Apagar item</DialogTitle>
