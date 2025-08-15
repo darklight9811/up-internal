@@ -1,6 +1,7 @@
 const CACHE = "app-cache";
 const offlineFallbackPage = "/offline";
 const CACHE_FIRST_DOMAINS = ['raw.githack.com', 'raw.githubusercontent.com'];
+self.__WB_DISABLE_DEV_LOGS = true
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 

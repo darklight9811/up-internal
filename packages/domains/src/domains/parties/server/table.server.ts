@@ -1,4 +1,5 @@
 import { c } from "../../../utils/db/columns";
+import { cores } from "../../cores/server/table.server";
 import { users } from "../../users/server/table.server";
 
 export const parties = c.table("parties", {
@@ -24,6 +25,7 @@ export const partiesRelations = c.relations(parties, ({ one, many }) => ({
 		references: [users.id],
 	}),
 	members: many(partyMembers),
+	cores: many(cores),
 }));
 
 export const partyMembers = c.table("party_members", {

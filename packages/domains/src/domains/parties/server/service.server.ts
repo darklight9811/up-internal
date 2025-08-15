@@ -12,8 +12,8 @@ export const partiesService = {
 		return partiesSQL.store(data, user);
 	},
 
-	async show(id: string) {
-		return partiesSQL.show(id);
+	async show(id: string, user?: UserSystemSchema) {
+		return partiesSQL.show(id, user);
 	},
 
 	async update(id: string, data: PartyFormSchema, user: UserSystemSchema) {

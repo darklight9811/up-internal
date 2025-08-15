@@ -2,7 +2,6 @@ import { z } from "zod/v4";
 
 import { t } from "../../../utils/trpc";
 import { paginationSchema } from "../../app";
-import { coresService } from "../../cores/server/service.server";
 import { partyFormSchema, partyMemberFormSchema } from "../schema";
 import { partiesService } from "./service.server";
 
@@ -80,19 +79,13 @@ export const partiesRouter = t.router({
 
 			if (!partyId) return null;
 
-			const [party, cores, core, member] = await Promise.all([
-				partiesService.show(partyId),
-				coresService.index(partyId, { limit: 5, page: 1, sort: "asc" }, ctx.user),
-				coreId ? coresService.show(coreId) : null,
-				partiesService.members.show(partyId, ctx.user.id),
-			]);
+			const [party] = await Promise.all([partiesService.show(partyId, ctx.user)]);
 
 			if (!party) return null;
 
 			return {
 				...party,
-				member,
-				cores: core ? [{ ...core, selected: true }, ...cores[0].filter((c) => c.id !== coreId)] : cores[0],
+				cores: party.cores.map((core) => ({ ...core, selected: core.id === coreId })),
 			};
 		}),
 

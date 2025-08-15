@@ -56,13 +56,9 @@ export const unstable_middleware = [i18nextMiddleware];
 export const loader = serverLoader(async ({ request, cookies }) => {
 	const partyId = cookies.get("partyId");
 
-	const [locale, user, party] = await Promise.all([
-		i18next.getLocale(request),
-		authService.session(cookies.get("token")),
-		partyId && partiesService.show(partyId),
-	]);
+	const [locale, user] = await Promise.all([i18next.getLocale(request), authService.session(cookies.get("token"))]);
 
-	return { locale, user, party };
+	return { locale, user, party: partyId ? await partiesService.show(partyId, user || undefined) : null };
 });
 
 export const handle = {

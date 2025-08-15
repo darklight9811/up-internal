@@ -62,7 +62,7 @@ export default function MembersListPage() {
 								</div>
 							</TableCell>
 							<TableCell>
-								{permissions.can(permissions.canManage, current?.member.role) && (
+								{permissions.can(permissions.canManage, current?.member?.role) && (
 									<Link
 										to={`/members/${member.id}/edit`}
 										className={buttonVariants({ size: "icon" })}

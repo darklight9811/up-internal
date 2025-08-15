@@ -21,6 +21,7 @@ export function ContextSwitcher() {
 
 	const { data: parties } = useQuery(trpc.parties.index.queryOptions());
 	const current = useCurrentParty();
+	const currentCore = current?.cores?.find((core) => core.selected);
 
 	const { mutateAsync: setActiveParty } = useMutation(
 		trpc.parties.current.set.mutationOptions({
@@ -46,14 +47,12 @@ export function ContextSwitcher() {
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-							<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+							<div className="will-change-transform group-data-[collapsible=icon]:-translate-x-2 bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
 								<BuildingIcon className="size-4" />
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{current?.name}</span>
-								{(current?.cores as { selected?: boolean }[])?.at(0)?.selected && (
-									<span className="truncate text-xs">{current?.cores.at(0)?.name}</span>
-								)}
+								{currentCore && <span className="truncate text-xs">{currentCore.name}</span>}
 							</div>
 							<ChevronsUpDownIcon className="ml-auto" />
 						</SidebarMenuButton>

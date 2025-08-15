@@ -22,7 +22,7 @@ export const cores = c.table("cores", {
 	...c.stamp(),
 });
 
-export const coresRelations = c.relations(cores, ({ one }) => ({
+export const coresRelations = c.relations(cores, ({ one, many }) => ({
 	party: one(parties, {
 		fields: [cores.partyId],
 		references: [parties.id],
@@ -31,6 +31,7 @@ export const coresRelations = c.relations(cores, ({ one }) => ({
 		fields: [cores.userCreatedId],
 		references: [users.id],
 	}),
+	members: many(coreMembers),
 }));
 
 export const coreMembers = c.table("core_members", {

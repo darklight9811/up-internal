@@ -48,10 +48,32 @@ export const partiesSQL = {
 		});
 	},
 
-	show(id: string) {
-		return db.query.parties.findFirst({
-			where: or(eq(parties.id, id), eq(parties.slug, id)),
-		});
+	show(id: string, user?: UserSystemSchema) {
+		return Promise.all([
+			db.query.parties.findFirst({
+				where: or(eq(parties.id, id), eq(parties.slug, id)),
+				with: {
+					cores: {
+						limit: 5,
+						columns: {
+							id: true,
+							name: true,
+						},
+					},
+				},
+			}),
+			user &&
+				db.query.partyMembers.findFirst({
+					where: and(eq(partyMembers.partyId, id), eq(partyMembers.userId, user.id)),
+				}),
+		]).then(([party, member]) =>
+			party
+				? {
+						...party,
+						member,
+					}
+				: null,
+		);
 	},
 
 	update(id: string, payload: PartyFormSchema) {
