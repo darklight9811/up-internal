@@ -86,6 +86,9 @@ export const partiesSQL = {
 					offset: pagination.limit * (pagination.page - 1),
 					orderBy: (table, { desc }) => [desc(table.createdAt)],
 					where: eq(partyMembers.partyId, party),
+					with: {
+						user: true,
+					},
 				}),
 				db
 					.select({ count: count() })

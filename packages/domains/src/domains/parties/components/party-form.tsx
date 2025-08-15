@@ -34,14 +34,7 @@ export function PartyForm({ children, onSubmit, data }: CoreFormProps) {
 					</form.Fieldset>
 				)}
 			/>
-			<form.AppField
-				name="name"
-				children={(field) => (
-					<form.Fieldset label="Nome">
-						<Input name="name" value={field.state.value} onChange={field.handleChange} />
-					</form.Fieldset>
-				)}
-			/>
+
 			<form.AppField
 				name="name"
 				children={(field) => (
@@ -64,6 +57,7 @@ export function PartyForm({ children, onSubmit, data }: CoreFormProps) {
 					</form.Fieldset>
 				)}
 			/>
+
 			{children}
 		</form.Form>
 	);

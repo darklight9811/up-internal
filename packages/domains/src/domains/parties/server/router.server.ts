@@ -39,8 +39,8 @@ export const partiesRouter = t.router({
 		 * Get a list of party members
 		 */
 		index: t.protected
-			.input(paginationSchema.and(z.object({ party: z.string() })))
-			.query(({ ctx, input }) => partiesService.members.index(input.party, input, ctx.user)),
+			.input(paginationSchema.and(z.object({ partyId: z.string() })))
+			.query(({ ctx, input }) => partiesService.members.index(input.partyId, input, ctx.user)),
 
 		/**
 		 * Request to join a party

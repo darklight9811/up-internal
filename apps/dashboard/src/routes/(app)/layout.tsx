@@ -1,4 +1,4 @@
-import { Building2Icon, CogIcon, HouseIcon } from "lucide-react";
+import { Building2Icon, CogIcon, HouseIcon, UsersIcon } from "lucide-react";
 import { Link, Outlet, redirect } from "react-router";
 
 import {
@@ -61,7 +61,15 @@ export default function AppLayout() {
 											</SidebarMenuButton>
 										</SidebarMenuItem>
 
-										{permissions.can(permissions.canManage, current.member.role) && (
+										<SidebarMenuItem className="group/collapsible">
+											<SidebarMenuButton asChild>
+												<Link to="/members">
+													<UsersIcon /> Membros
+												</Link>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
+
+										{permissions.can(permissions.canManage, current.member?.role) && (
 											<SidebarMenuItem className="group/collapsible">
 												<SidebarMenuButton asChild>
 													<Link to="/settings">
