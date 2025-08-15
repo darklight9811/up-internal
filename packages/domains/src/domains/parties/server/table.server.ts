@@ -5,8 +5,8 @@ export const parties = c.table("parties", {
 	id: c.id().defaultRandom().primaryKey(),
 
 	logo: c.varchar(),
-	slug: c.text().unique(),
-	name: c.text().notNull(),
+	slug: c.text().unique().notNull(),
+	name: c.text().notNull().notNull(),
 	description: c.text(),
 	location: c.geometry({ type: "point", mode: "tuple", srid: 4326 }),
 
@@ -18,11 +18,12 @@ export const parties = c.table("parties", {
 	...c.stamp(),
 });
 
-export const partiesRelations = c.relations(parties, ({ one }) => ({
+export const partiesRelations = c.relations(parties, ({ one, many }) => ({
 	userCreated: one(users, {
 		fields: [parties.userCreatedId],
 		references: [users.id],
 	}),
+	members: many(partyMembers),
 }));
 
 export const partyMembers = c.table("party_members", {

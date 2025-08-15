@@ -109,6 +109,14 @@ export const partiesSQL = {
 			return db.insert(partyMembers).values({ ...data, userId: user.id, partyId: party });
 		},
 
+		show(party: string, user: string) {
+			return db
+				.select()
+				.from(partyMembers)
+				.where(and(eq(partyMembers.partyId, party), eq(partyMembers.userId, user)))
+				.then((t) => t[0]);
+		},
+
 		update(member: string, data: PartyMemberFormSchema) {
 			return db
 				.update(partyMembers)

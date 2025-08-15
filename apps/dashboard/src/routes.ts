@@ -22,6 +22,7 @@ export default [
 		route("/cores", "./routes/(app)/cores/page.tsx"),
 		route("/cores/add", "./routes/(app)/cores/add/page.tsx"),
 		route("/cores/:id/edit", "./routes/(app)/cores/[id]/edit/page.tsx"),
+		route("/settings", "./routes/(app)/settings/page.tsx"),
 	]),
 
 	// General

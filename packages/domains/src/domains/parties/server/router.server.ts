@@ -80,14 +80,18 @@ export const partiesRouter = t.router({
 
 			if (!partyId) return null;
 
-			const [party, cores, core] = await Promise.all([
+			const [party, cores, core, member] = await Promise.all([
 				partiesService.show(partyId),
 				coresService.index(partyId, { limit: 5, page: 1, sort: "asc" }, ctx.user),
 				coreId ? coresService.show(coreId) : null,
+				partiesService.members.show(partyId, ctx.user.id),
 			]);
+
+			if (!party) return null;
 
 			return {
 				...party,
+				member,
 				cores: core ? [{ ...core, selected: true }, ...cores[0].filter((c) => c.id !== coreId)] : cores[0],
 			};
 		}),

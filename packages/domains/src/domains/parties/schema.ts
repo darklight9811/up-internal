@@ -9,10 +9,10 @@ export const partyMemberFormSchema = z.object({
 export type PartyMemberFormSchema = z.infer<typeof partyMemberFormSchema>;
 
 export const partyFormSchema = z.object({
-	slug: z.string().min(2).max(100),
+	slug: z.string().min(2).max(20),
 	name: z.string().min(2).max(100),
-	description: z.string().max(500).optional(),
-	location: z.tuple([z.number(), z.number()]),
+	description: z.string().max(500).nullable(),
+	location: z.tuple([z.number(), z.number()]).nullable(),
 });
 
 export type PartyFormSchema = z.infer<typeof partyFormSchema>;
@@ -22,6 +22,9 @@ export const permissions = {
 	canInteract: 0b10,
 	canManage: 0b100,
 	canDelete: 0b1000,
+	can(permission: number, role = 0) {
+		return (role & permission) === permission;
+	},
 } as const;
 
 export type Permissions = typeof permissions;

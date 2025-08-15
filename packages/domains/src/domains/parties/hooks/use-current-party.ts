@@ -7,5 +7,5 @@ export function useCurrentParty() {
 	const data = useRouteLoaderData<{ party: RouterOutputs["parties"]["current"]["get"] }>("root");
 	const { data: current } = useQuery(trpc.parties.current.get.queryOptions());
 
-	return current || data?.party;
+	return ((current || data?.party) as RouterOutputs["parties"]["current"]["get"]) || null;
 }

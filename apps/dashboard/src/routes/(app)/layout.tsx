@@ -17,7 +17,7 @@ import {
 
 import { authService } from "@repo/domains/auth/server";
 import { ContextSwitcher } from "@repo/domains/cores";
-import { useCurrentParty } from "@repo/domains/parties";
+import { permissions, useCurrentParty } from "@repo/domains/parties";
 
 import { serverLoader } from "src/utils/server-loader";
 
@@ -61,13 +61,15 @@ export default function AppLayout() {
 											</SidebarMenuButton>
 										</SidebarMenuItem>
 
-										<SidebarMenuItem className="group/collapsible">
-											<SidebarMenuButton asChild>
-												<Link to="/settings">
-													<CogIcon /> Configurações
-												</Link>
-											</SidebarMenuButton>
-										</SidebarMenuItem>
+										{permissions.can(permissions.canManage, current.member.role) && (
+											<SidebarMenuItem className="group/collapsible">
+												<SidebarMenuButton asChild>
+													<Link to="/settings">
+														<CogIcon /> Configurações
+													</Link>
+												</SidebarMenuButton>
+											</SidebarMenuItem>
+										)}
 									</SidebarMenu>
 								</SidebarGroupContent>
 							</SidebarGroup>

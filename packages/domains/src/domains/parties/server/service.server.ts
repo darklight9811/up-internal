@@ -45,6 +45,10 @@ export const partiesService = {
 			return partiesSQL.members.add(party, data, user);
 		},
 
+		show(party: string, user: string) {
+			return partiesSQL.members.show(party, user);
+		},
+
 		async update(party: string, member: string, data: PartyMemberFormSchema, user: UserSystemSchema) {
 			await partiesSQL.members.can(party, user.id, permissions.canManage);
 
