@@ -1,5 +1,7 @@
 // Client
 export { app$ } from "./client";
+// Components
+export { DeleteDialog } from "./components/delete-dialog";
 // General
 export { env } from "./env";
 // Helpers
